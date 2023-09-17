@@ -1,0 +1,17 @@
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Style for input fields */
+input[type="text"], input[type="email"], input[type="password"],input[type="number"],select,input[type="date"]{
+    width: 100%;
+    padding: calc(3px + 0.5vw);
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgb(241 245 249);
+}
+label{
+    font-weight: bold;
+}

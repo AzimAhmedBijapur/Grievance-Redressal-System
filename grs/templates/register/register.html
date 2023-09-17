@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRS</title>
+    <link rel="stylesheet" href="{% static 'src/out.css' %}">
+    <link rel="stylesheet" href="{% static 'src/register.css' %}">
+</head>
+
+<body class="flex justify-center py-5 px-3 bg-slate-100">
+    <div class="p-10 bg-white w-full md:w-1/2 rounded-xl">
+        <div class="flex flex-col gap-6 justify-center mb-10 items-center bg-blue-50 p-4 rounded-lg md:flex-row">
+            <img src="{% static 'img/logo-hq.png' %}" class="rounded-full h-28">
+            <div class="flex-col">
+                <span class="text-green-700 text-xl">Anjuman-I-Islam's</span><br>
+                <span class="text-lg">M. H. Saboo Siddik</span><br>
+                <span class="text-lg">College of Engineering</span>
+            </div>
+        </div>
+        <div>
+            {% if form.errors %}
+            <div class="mt-4 mb-4">
+                <strong style="color: red;">Error:</strong>
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    <li class="text-red-500" style="color: red;">Invalid {{ field }}: {{ error }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if messages %}
+            <div class="flex justify-between bg-green-200 p-5 rounded-lg text-green-900 mb-4">
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li style="list-style-type: none;">{{ message }}<a href="{url 'login'}"
+                            style="color: blue;text-decoration: underline; font-size:1rem;">&nbsp;Back to Login</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <form method="POST" action="" class="flex flex-col gap-10 px-1 md:px-12">
+                {% csrf_token %}
+                <!-- <h1 class="text-center text-3xl font-bold">Register</h1> -->
+                {% for field in form %}
+                <div>
+                    <div class="font-bold">{{field.label}}</div>
+                    <div class="w-full">{{ field }}</div>
+                </div>
+                {% endfor %}
+                <div class="flex justify-center">
+                    <input type="submit"
+                        class=" w-2/3 bg-green-500 rounded-sm px-3 py-3 text-white font-bold md:w-full">
+                </div>
+            </form>
+        </div>
+
+
+
+</body>
+
+</html>
