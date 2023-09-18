@@ -20,6 +20,7 @@
                 <span class="text-lg">College of Engineering</span>
             </div>
         </div>
+        <p class="text-center text-red-500 text-lg my-6">(Only for faculty)</p>
         <div>
             {% if form.errors %}
             <div class="mt-4 mb-4">
@@ -29,16 +30,6 @@
                     {% for error in errors %}
                     <li class="text-red-500" style="color: red;">Invalid {{ field }}: {{ error }}</li>
                     {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
-            {% if messages %}
-            <div class="flex justify-between bg-green-200 p-5 rounded-lg text-green-900 mb-4">
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li style="list-style-type: none;">{{ message }}<a href="{url 'login'}"
-                            style="color: blue;text-decoration: underline; font-size:1rem;">&nbsp;Back to Login</a></li>
                     {% endfor %}
                 </ul>
             </div>

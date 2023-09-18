@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRS</title>
+    <link rel="stylesheet" href="{% static 'src/out.css' %}">
+    <link rel="stylesheet" href="{% static 'src/login.css' %}">
+</head>
+
+<body class="px-5 py-5 bg-slate-100">
+    <div id="form-div" class="rounded-lg p-5 shadow w-full md:w-2/4">
+        <div>
+            <div class="p-1 mt-2 mx-2 flex gap-2 flex-col">
+                <div class="text-2xl text-center">Grievance Redressal System</div>
+                <div class="flex gap-2">
+                    <img src="{% static 'img/logo-hq.png'%}" class="h-16 rounded-full">
+                    <div class="flex-col">
+                        <span class="text-green-700 text-sm">Anjuman-I-Islam's</span><br>
+                        <span class="text-sm">M. H. Saboo Siddik</span><br>
+                        <span class="text-sm">College of Engineering</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="POST" class="p-5 ">
+            {% csrf_token %}
+            <div class="field flex flex-col gap-3">
+                <div class="font-bold"><label for="uname">Email</label></div>
+                <div class="field-input border rounded-lg"><input type="email" id="uname" name="uname"
+                        class="rounded-lg" required></div>
+            </div>
+            <br>
+            <div class="field flex flex-col gap-3">
+                <div class="font-bold"><label for="pw">Password</label></div>
+                <div class="field-input border rounded-lg"><input type="password" id="pw" name="pw" class="rounded-lg "
+                        required>
+                </div>
+            </div>
+            <br>
+            <div class="field flex flex-col gap-3">
+                <div class="font-bold"><label for="role">Role</label></div>
+                <div class="field-input rounded-lg"><select class="rounded-lg border" id="role" name="role"
+                        data-te-select-init required>
+                        <option value="1">Faculty</option>
+                        <option value="2">Admin</option>
+                        <option value="3">Review</option>
+                        <option value="4">Assessment</option>
+                    </select></div>
+            </div>
+            <br>
+            <div class="flex justify-center">
+                <input type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            </div>
+            {% if messages %}
+            <div class="flex mt-4 justify-between rounded-lg mb-4 w-full">
+                <ul class="messages w-full text-center">
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="bg-red-200 p-5 w-full rounded-lg text-red-700">
+                        <li style="list-style-type: none;">{{ message }}</li>
+                    </div>
+                    {% else %}
+                    <div class="bg-green-200 p-5 w-full text-green-900 rounded-lg ">
+                        <li style="list-style-type: none;">{{ message }}</li>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <div class="flex justify-center mt-4">
+                <p>Don't have an account? &nbsp;<a href="{% url 'register' %}" class="underline"
+                        style="color: blue;">Sign
+                        Up</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

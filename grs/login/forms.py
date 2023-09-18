@@ -5,10 +5,6 @@ from .models import CustomUser
 
 class CreateUserForm(UserCreationForm):
     # Custom fields
-    username = forms.CharField(
-        required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Enter `Name + Birth Year`,  eg., `john1967`'})
-    )
     full_name = forms.CharField(required=True, max_length=50,label='Full Name')
     gender = forms.ChoiceField(choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], required=True)
     role = forms.ChoiceField(choices=[('Faculty', 'Faculty')], required=True)
@@ -62,6 +58,7 @@ class CreateUserForm(UserCreationForm):
         user.current_address = self.cleaned_data['current_address']
         user.permanent_address = self.cleaned_data['permanent_address']
         user.email = self.cleaned_data['email']
+        user.username = self.cleaned_data['email']
         user.educational_qualification = self.cleaned_data['educational_qualification']
         user.department = self.cleaned_data['department']
         user.designation = self.cleaned_data['designation']
@@ -77,6 +74,6 @@ class CreateUserForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['full_name','username', 'password1', 'password2', 'gender', 'role','contact_no', 'telephone_no',
-                  'current_address', 'permanent_address', 'email', 'educational_qualification',
+        fields = ['full_name','email','password1', 'password2', 'gender', 'role','contact_no', 'telephone_no',
+                  'current_address', 'permanent_address','educational_qualification',
                   'department', 'designation', 'permanent_employee', 'date_of_probation', 'salary', 'payscale']

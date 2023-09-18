@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+html{
+    height: 100%;
+}
+#form-div{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#form-div form{
+    width: 100%;
+}
+#form-div #uname,#form-div #pw,#form-div #role{
+    background-color: rgb(241 245 249) !important;
+    width: 100%;
+    height: calc(2rem + 1vw);
+    padding: 0.5rem;
+}
+#form-div select{
+    background-color: rgb(241 245 249) !important;
+    width: 100%;
+    height:  calc(2rem + 1vw)!important;
+    padding: 0.5rem;
+}
+

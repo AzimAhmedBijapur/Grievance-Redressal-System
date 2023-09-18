@@ -1,0 +1,105 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block body%}
+<div id="content" class="bg-slate-100">
+    <div class="text-center text-xl p-4 font-extralight">
+        Grievance redressal system of MHSSCE
+    </div>
+    <div class="card-container">
+        <div class="card shadow" style="color: green;border-radius:0;">
+            <div class="card-title">Solved</div>
+            <div class="card-subtitle">1</div>
+        </div>
+        <div class="card shadow" style="color: red; border-radius:0;">
+            <div class="card-title">Unsolved</div>
+            <div class="card-subtitle">2</div>
+        </div>
+        <div class="card shadow" style="color:orange; border-radius:0;">
+            <div class="card-title">In-progress</div>
+            <div class="card-subtitle">3</div>
+        </div>
+    </div>
+    <div id="profile">
+        <!-- About Section -->
+        <div class="bg-white p-3 shadow rounded-none">
+            <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                <span class="text-green-500">
+                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </span>
+                <span class="tracking-wide">About</span>
+            </div>
+            <div class="text-gray-700">
+                <div class="grid md:grid-cols-2 text-md">
+                    <div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Name</div>
+                            <div class="px-4 py-2">{{ user.full_name}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Gender</div>
+                            <div class="px-4 py-2">{{ user.gender}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Contact No.</div>
+                            <div class="px-4 py-2">{{ user.contact_no}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Telephone No.</div>
+                            <div class="px-4 py-2">{{ user.telephone_no}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Current Address</div>
+                            <div class="px-4 py-2">{{ user.current_address}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Permanant Address</div>
+                            <div class="px-4 py-2">{{ user.permanent_address}}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Email.</div>
+                            <div class="px-4 py-2">
+                                <a class="text-blue-800" href="mailto:jane@example.com">{{ user.email}}</a>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Educational qualification</div>
+                            <div class="px-4 py-2">{{ user.educational_qualification}}</div>
+                        </div>
+                    </div>
+                    <div>
+
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Name of Section/Dept.</div>
+                            <div class="px-4 py-2">{{ user.department}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Designation</div>
+                            <div class="px-4 py-2">{{ user.designation}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Permanent</div>
+                            <div class="px-4 py-2">{{ user.permanent_employee}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Date of Probation/Confirmation</div>
+                            <div class="px-4 py-2">{{ user.date_of_probation}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Salary</div>
+                            <div class="px-4 py-2">{{ user.salary}}</div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="px-4 py-2 font-semibold">Payscale</div>
+                            <div class="px-4 py-2">{{ user.payscale}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock%}
