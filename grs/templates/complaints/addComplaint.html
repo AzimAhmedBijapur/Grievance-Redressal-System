@@ -1,0 +1,60 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block body%}
+<div id="content-add-complaint" class="mt-6">
+    <!-- form begins here -->
+    <form method="POST" class="rounded-xl shadow" enctype="multipart/form-data">
+        {% csrf_token%}
+        <div>
+            <h1>Add complaint</h1>
+        </div>
+        {% if messages %}
+        <div class="flex mt-4 justify-between rounded-lg mb-4 w-full">
+            <ul class="messages w-full text-center">
+                {% for message in messages %}
+                <div class="bg-green-200 p-5 w-full text-green-900 rounded-lg ">
+                    <li style="list-style-type: none;">{{ message }}</li>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div class="field">
+            <div><label for="category">Category</label></div>
+            <div class="input-fields"><select id="category" name="category" data-te-select-init>
+                    <option value="1">Management</option>
+                    <option value="2">Students</option>
+                    <option value="3">Infrastructure</option>
+                    <option value="4">Salary</option>
+                </select></div>
+        </div>
+        <br>
+        <div class="field">
+            <div><label for="subject">Subject</label></div>
+            <div class="input-fields">
+                <input type="text" id="subject" name="subject">
+            </div>
+        </div>
+        <br>
+        <div class="field">
+            <div class=""><label for="description">Description</label></div>
+            <div class="input-fields">
+                <textarea name="description" id="description" rows="10"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="field">
+            <div class=""><label for="file-up">Upload documents (if any)</label></div>
+            <div class="input-fields">
+                <input type="file" name="file-up" id="file-up">
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="field">
+            <input type="submit" id="submitComplaint"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" value="Submit">
+        </div>
+    </form>
+</div>
+{% endblock%}

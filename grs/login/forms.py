@@ -2,6 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from .models import CustomUser
+from .models import Complaint  
+from django.forms import ModelForm
 
 class CreateUserForm(UserCreationForm):
     # Custom fields
@@ -77,3 +79,4 @@ class CreateUserForm(UserCreationForm):
         fields = ['full_name','email','password1', 'password2', 'gender', 'role','contact_no', 'telephone_no',
                   'current_address', 'permanent_address','educational_qualification',
                   'department', 'designation', 'permanent_employee', 'date_of_probation', 'salary', 'payscale']
+

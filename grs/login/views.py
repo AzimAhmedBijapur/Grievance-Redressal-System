@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm  
 from django.contrib import messages
-from django.conf import settings
-from django.http import HttpResponse
-from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout, authenticate
 from .forms import CreateUserForm
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
+from .models import Complaint
+from django.http import HttpResponse, Http404
+import os
+from django.conf import settings
 
 def register(request):
     if request.method == 'POST':  
@@ -46,6 +46,7 @@ def loginPage(request):
     return render(request,'login/login.html')
 
 @login_required(login_url='login')
+@cache_control(no_cache=True, must_revalidate=True,no_store=True)
 def logoutUser(request):
     request.session.flush()
     logout(request)
@@ -59,4 +60,43 @@ def index(request):
 @cache_control(no_cache=True, must_revalidate=True,no_store=True)
 def faculty(request):
     return render(request,'faculty/faculty.html')
+
+
+@login_required(login_url='login')
+@cache_control(no_cache=True, must_revalidate=True,no_store=True)
+def addComplaint(request):
+    print(request)
+    if request.method == 'POST':
+        category = request.POST.get('category')
+        subject = request.POST.get('subject')
+        description = request.POST.get('description')
+        documents = request.FILES['file-up']
+
+        if category == '1':
+            category = 'Management'
+        elif category == '2':
+            category = 'Students'
+        elif category == '2':
+            category = 'Infrastructure'
+        else:
+            category = 'Salary'
+        complaint = Complaint.objects.create(
+            user=request.user,
+            category=category,
+            subject=subject,
+            description=description,
+            documents = documents
+        )
+        messages.success(request,"Complaint registered successfully")
+        return redirect('add/complaint')
+    return render(request,'complaints/addComplaint.html')
+
+
+@login_required(login_url='login')
+@cache_control(no_cache=True, must_revalidate=True,no_store=True)
+def viewMyComplaints(request):
+    context ={}
+    context["complaints"] = Complaint.objects.filter(user= request.user)
+    return render(request,'complaints/viewMyComplaints.html',context)
+
 

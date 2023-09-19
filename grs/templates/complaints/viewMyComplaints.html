@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block body%}<div id="content-view-complaints" class="mt-6">
+    <div>
+        <h1>Your Complaints</h1>
+    </div>
+    <div class="overflow-scroll">
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-left text-sm font-light">
+                            <thead class="border-b font-medium dark:border-neutral-500">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Subject</th>
+                                    <th scope="col" class="px-6 py-4">Category</th>
+                                    <th scope="col" class="px-6 py-4">Date published</th>
+                                    <th scope="col" class="px-6 py-4">Description</th>
+                                    <th scope="col" class="px-6 py-4">Report</th>
+                                    <th scope="col" class="px-6 py-4">Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for complaint in complaints%}
+                                <tr class="border-b dark:border-neutral-500">
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.subject}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.category}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.subject}}</td>
+                                    <td class="px-6 py-4">{{ complaint.description}}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {% if complaint.report %}
+                                        <a href="{{ complaint.report.url }}"><i class="fa-solid fa-file fa-beat fa-xl"
+                                                style="color: #0c9202;"></i></a>
+                                        {% else %}
+                                        ---
+                                        {% endif %}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.status}}</td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

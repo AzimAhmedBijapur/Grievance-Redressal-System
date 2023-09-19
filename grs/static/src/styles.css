@@ -111,7 +111,7 @@ form .input-fields select{
     border-radius: 5px;
     padding: 0.3rem;
 }
-form .input-fields input{
+form .input-fields input:not(#submitComplaint){
     width: 50%;
     background-color: rgb(226 232 240);
     height: 2rem;
@@ -121,17 +121,16 @@ form .input-fields input{
 .input-fields  #subject{
     width: 100%;
 }
-.input-fields  #desc{
+.input-fields #description{
     width: 100%;
     background-color: rgb(226 232 240);
     border-radius: 5px;
     padding: 0.3rem;
 }
 .input-fields #file-up{
-    background-color: white;
-    height:3rem;
+    background-color: white !important;
+    height:3rem !important;
 }
-
 /* assessment */
 
 #report-up{
