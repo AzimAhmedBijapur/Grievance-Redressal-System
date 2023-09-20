@@ -1,13 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .forms import CreateUserForm
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from .models import Complaint
-from django.http import HttpResponse, Http404
+from django.http import FileResponse, HttpResponse, Http404
 import os
 from django.conf import settings
+from django.contrib.auth import get_user_model  # Import the User model
+from django.http import FileResponse
+from django.shortcuts import HttpResponse
+import os
 
 def register(request):
     if request.method == 'POST':  
@@ -100,3 +104,30 @@ def viewMyComplaints(request):
     return render(request,'complaints/viewMyComplaints.html',context)
 
 
+def download_complaint_report(request, filename):
+    file_directory = "complaints/reports/"  
+    file_path = os.path.join(file_directory, filename)
+    if os.path.exists(file_path):
+        # If the file exists, serve it for download
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    else:
+        # If the file does not exist, return an error response
+        return HttpResponse("File not found", status=404)
+
+
+def download_complaint_document(request, filename):
+    file_directory = "complaints/documents/"  
+    file_path = os.path.join(file_directory, filename)
+    print(file_path)
+    if os.path.exists(file_path):
+        # If the file exists, serve it for download
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    else:
+        # If the file does not exist, return an error response
+        return HttpResponse("File not found", status=404)

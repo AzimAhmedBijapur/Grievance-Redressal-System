@@ -31,8 +31,9 @@
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-4">
                                         {% if complaint.report %}
-                                        <a href="{{ complaint.report.url }}"><i class="fa-solid fa-file fa-beat fa-xl"
-                                                style="color: #0c9202;"></i></a>
+                                        <a href="{{complaint.report.name}}"><i class="fa-solid fa-file fa-beat fa-xl"
+                                                style="color: #0c9202;"></i>
+                                        </a>
                                         {% else %}
                                         ---
                                         {% endif %}

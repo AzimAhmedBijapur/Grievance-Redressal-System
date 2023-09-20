@@ -32,13 +32,13 @@ def document_upload_to(instance, filename):
     unique_filename = str(uuid.uuid4())
     file_extension = filename.split('.')[-1]
     final_filename = f"{unique_filename}.{file_extension}"
-    return f"complaints/documents/{final_filename}"
+    return f"documents/{final_filename}"
 
 def report_upload_to(instance, filename):
     unique_filename = str(uuid.uuid4())
     file_extension = filename.split('.')[-1]
     final_filename = f"{unique_filename}.{file_extension}"
-    return f"complaints/reports/{final_filename}"
+    return f"reports/{final_filename}"
 
 class Complaint(models.Model):
     user = models.ForeignKey(CustomUser,default=None, on_delete=models.CASCADE)

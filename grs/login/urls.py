@@ -14,4 +14,6 @@ urlpatterns = [
     path("faculty",views.faculty,name="faculty"),
     path("add/complaint",views.addComplaint,name="add/complaint"),
     path("view/MyComplaints",views.viewMyComplaints,name="view/MyComplaints"),
+   path('view/reports/<str:filename>', views.download_complaint_report, name='download_complaint_report'),
+   path('complaints/documents/<str:filename>', views.download_complaint_document, name='download_complaint_document'),
 ]
