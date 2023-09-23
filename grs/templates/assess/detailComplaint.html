@@ -1,12 +1,12 @@
-{% extends 'review-base.html' %}
+{% extends 'assess-base.html' %}
 {% load static %}
 {% block body %}
 <div class="bg-stone-100">
-
     <div>
         <h1 class="font-bold">{{complaint.subject}}</h1>
         <h3 class="ml-4 text-teal-700">Category: {{complaint.category}}</h3>
     </div>
+
     <div class="applicant-info ml-4 p-5">
         {% if messages %}
         <div class="flex mt-4 justify-between rounded-lg mb-4 w-full">
@@ -26,6 +26,7 @@
         </div>
         {% endif %}
         <div>
+
             <div class="mt-6 border-t border-gray-100">
                 <dl class="divide-y divide-gray-100">
                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -117,26 +118,49 @@
         </div>
 
     </div>
-    <form method="POST" class="w-1/3 ml-6 p-5 bg-yellow-200 rounded-lg mb-6">
-        {% csrf_token %}
-        <div class="field">
-            <div><label for="severity" class="text-xl text-red-700">Set severity</label></div>
-            <div class="input-fields"><select id="severity" name="severity" data-te-select-init>
-                    <option value="Hight">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                </select></div>
-        </div>
-        <div class="field mt-3">
-            <div><label for="due-date" class="text-xl text-red-700">Set Due date</label></div>
-            <div class="input-fields"><input type="date" id="due-date" name="due-date" data-te-select-init>
+    <div class="flex gap-6">
+        <form method="POST" class="w-1/2 ml-6 p-4 bg-yellow-200 rounded-lg mb-6" id="rev-assess">
+            {% csrf_token %}
+            <div class="field">
+                <div><label for="severity" class="text-xl text-red-700">Set severity</label></div>
+                <div class="input-fields"><select id="severity" name="severity" data-te-select-init>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select></div>
             </div>
-        </div>
-        <div class="field mt-6">
-            <input type="submit" class="bg-green-400 px-3 py-2 rounded-lg text-white bold">
-        </div>
-    </form>
+            <div class="field mt-3">
+                <div><label for="due-date" class="text-xl text-red-700">Set Due date</label></div>
+                <div class="input-fields"><input type="date" id="due-date" name="due-date" data-te-select-init>
+                </div>
+            </div>
+            <!-- <div class="field mt-3">
+                    <div><label for="report-up" class="text-xl text-red-700">Attach report</label></div>
+                    <div class="input-fields"><input type="file" id="report-up" name="report-up">
+                    </div>
+                </div> -->
+            <div class="field mt-6">
+                <input type="submit" id="submit-sev" class="bg-green-400 px-3 py-2 rounded-lg text-white bold">
+            </div>
+
+        </form>
+        <form method="POST" class="w-1/3 bg-teal-200 rounded-lg mb-6 p-4 " enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="field mt-3 flex flex-col">
+                <div><label for="report-up" class="text-xl text-red-700">Attach report</label></div>
+                <div class="input-fields"><input type="file" id="report-up" name="report-up"
+                        style="height: 3rem !important; background-color:rgb(153 246 228); width:fit-content">
+                </div>
+            </div>
+            <div class="field mt-6 ">
+                <input type="submit" id="submit-report" name="submit-report"
+                    class=" w-1/4 bg-green-400 px-3 py-2 rounded-lg text-white bold">
+            </div>
+        </form>
+    </div>
 
 </div>
+
 <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
+
 {% endblock %}
