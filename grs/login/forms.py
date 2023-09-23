@@ -80,3 +80,41 @@ class CreateUserForm(UserCreationForm):
                   'current_address', 'permanent_address','educational_qualification',
                   'department', 'designation', 'permanent_employee', 'date_of_probation', 'salary', 'payscale']
 
+
+class CreateMgmtUserForm(UserCreationForm):
+    # Custom fields
+    full_name = forms.CharField(required=True, max_length=50,label='Full Name')
+    gender = forms.ChoiceField(choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], required=True)
+    role = forms.ChoiceField(choices=[('Review Committee', 'Review Committee'),('Assessment Committee', 'Assessment Committee')], required=True)
+    email = forms.EmailField(required=True)
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        # Add custom validation logic here
+        if not email.endswith('@mhssce.ac.in'):
+            raise forms.ValidationError("Email must be from mhssce.ac.in domain.")
+        existing_user = CustomUser.objects.filter(email=email).exclude(pk=self.instance.pk).first()
+
+        if existing_user:
+            raise forms.ValidationError("This email address is already taken. Please choose a different one.")
+
+        return email
+    
+    def save(self, commit=True):
+        user = super(CreateMgmtUserForm, self).save(commit=False)
+
+        # Assign values to the custom fields
+        user.gender = self.cleaned_data['gender']
+        user.role = self.cleaned_data['role']
+        user.full_name = self.cleaned_data['full_name']
+        user.email = self.cleaned_data['email']
+        user.username = self.cleaned_data['email']
+
+        if commit:
+            user.save()
+            print(user)
+        return user
+
+    class Meta:
+        model = CustomUser
+        fields = ['full_name','email','password1', 'password2', 'gender', 'role']

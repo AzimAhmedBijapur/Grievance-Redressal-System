@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
 import uuid
 
+
 class CustomUser(AbstractUser):
     full_name = models.CharField(max_length=100, blank=True)
     role = models.CharField(max_length=50, choices=[('Review Committee', 'Review Committee'), ('Assessment Committee', 'Assessment Committee'), ('HO', 'HO'),('Faculty','Faculty')])
@@ -40,6 +41,7 @@ def report_upload_to(instance, filename):
     final_filename = f"{unique_filename}.{file_extension}"
     return f"reports/{final_filename}"
 
+
 class Complaint(models.Model):
     user = models.ForeignKey(CustomUser,default=None, on_delete=models.CASCADE)
     category = models.CharField(max_length=100)
@@ -50,7 +52,7 @@ class Complaint(models.Model):
     status = models.CharField(max_length=100,default="Unsolved",choices=[('Solved','Solved'),('Unsolved','Unsolved'),('In-Progress','In-Progress')])
     severity = models.CharField(max_length=100,blank=True,null=True)
     due_date = models.DateField(null=True,blank=True)
-    report = models.FileField(upload_to=report_upload_to,null=True,blank=True)
+    report = models.FileField(upload_to=report_upload_to,null=True,blank=True,)
 
 
     def __str__(self):
