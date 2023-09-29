@@ -13,6 +13,7 @@ from django.contrib.auth import get_user_model  # Import the User model
 from django.http import FileResponse
 from django.shortcuts import HttpResponse
 import os
+from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
 
 # Check if user is admin or not
@@ -37,7 +38,7 @@ def register(request):
     context = {  
         'form':form  
     }  
-    return render(request, 'register/register-mgmt.html', context)  
+    return render(request, 'register/register.html', context)  
 
 # Register management staff only by admin
 @user_passes_test(is_admin)
@@ -56,7 +57,7 @@ def registerManagementStaff(request):
     context = {  
         'form':form  
     }  
-    return render(request, 'register/register.html', context)  
+    return render(request, 'register/register-mgmt.html', context)  
 
 # Login page
 def loginPage(request):
@@ -121,15 +122,6 @@ def addComplaint(request):
         subject = request.POST.get('subject')
         description = request.POST.get('description')
         documents = request.FILES['file-up']
-
-        if category == '1':
-            category = 'Management'
-        elif category == '2':
-            category = 'Students'
-        elif category == '2':
-            category = 'Infrastructure'
-        else:
-            category = 'Salary'
         complaint = Complaint.objects.create(
             user=request.user,
             category=category,
@@ -138,6 +130,13 @@ def addComplaint(request):
             documents = documents
         )
         messages.success(request,"Complaint registered successfully")
+        send_mail(
+            subject=subject,
+            message=description,
+            from_email="whalefry@gmail.com",
+            recipient_list=["azeembijapur786@gmail.com"],
+            fail_silently=False,
+        )
         return redirect('add/complaint')
     return render(request,'complaints/addComplaint.html')
 

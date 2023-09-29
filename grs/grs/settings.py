@@ -9,12 +9,17 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
 from pathlib import Path
 import os
+import environ
+from django.contrib import messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -32,6 +37,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +49,9 @@ INSTALLED_APPS = [
     'review',
     'assess',
 ]
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -131,6 +140,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'login.CustomUser'
 
+# STATIC_ROOT = os.path.join('static')
+
 MEDIA_URL = '/complaints/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'complaints/')
+
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'whalefry@gmail.com'
+EMAIL_HOST_PASSWORD = env('APP_PASSWORD_EMAIL')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+JAZZMIN_SETTINGS = {
+
+    "site_logo": os.path.join(BASE_DIR ,"static/img/logo-hq.png"),
+    "login_logo": os.path.join(BASE_DIR ,"static/img/logo-hq.png"),
+    "custom_css": "src/admin.css",
+    "site_logo_classes": "img-circle",
+    "welcome_sign": "Welcome to the Grievance redressal portal of MHSSCE !",
+    "copyright": "M.h.s.s.c.e 2023",
+    "topmenu_links": [
+
+        {"name": "Home", "url": "index",},
+        {"name": "Add management member", "url": "/add/management/staff",},
+        
+    ]
+}

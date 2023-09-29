@@ -1,8 +1,6 @@
-{% extends 'review-base.html' %}
-{% load static %}
+{% extends "review-base.html" %}
 {% block body %}
 <div class="bg-stone-100">
-
     <div>
         <h1 class="font-bold">{{complaint.subject}}</h1>
         <h3 class="ml-4 text-teal-700">Category: {{complaint.category}}</h3>
@@ -138,5 +136,4 @@
     </form>
 
 </div>
-<script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
 {% endblock %}

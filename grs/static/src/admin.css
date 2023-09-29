@@ -1,0 +1,13 @@
+img {
+    height: auto!important;
+    width: calc(100px + 2vw) !important;
+    background-color: green;
+    border-radius: 9999px;
+}
+.jazzmin-login-page{
+    background-color: rgb(241 245 249);
+}
+.img-circle{
+    height: auto!important;
+    width: calc(24px + 1.5vw) !important;
+}

@@ -1,0 +1,186 @@
+{% load static %}
+{% load admin_urls %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'src/home.css' %}">
+    <link rel="stylesheet" href="{% static 'src/out.css' %}">
+    <title>GRS</title>
+</head>
+
+<body>
+    <div class="header-div">
+        <div class="flex justify-end bg-green-500">
+            <div class="mr-6 p-2"><a href="{% url 'admin:index' %}" class="text-white font-medium">ADMIN
+                    LOGIN</a>
+            </div>
+        </div>
+        <div class="flex justify-between items-center bg-blue-50 px-24">
+            <div class="flex items-center gap-4 p-4">
+                <img src="{% static 'img/logo-hq.png' %}" alt="" class="h-24 ml-6 rounded-full">
+                <div class="items-center">
+                    <div class="text-green-600 font-extralight">Anjuman-I-Islam's</div>
+                    <div class="font-light text-black">M. H. Saboo Siddik </div>
+                    <div class="font-light text-black">College of Engineering</div>
+                </div>
+            </div>
+            <div class="">
+                <div class="text-3xl ml-6 text-black font-extralight">Grievance Redressal Portal
+                </div>
+            </div>
+
+        </div>
+        <nav class="" id="navbar">
+            <ul class="flex p-2 bg-green-500 justify-between">
+                <div class="flex">
+                    <li class="px-4"><a href="#About" class="text-white text-lg ">About
+                            Us</a>
+                    </li>
+                    <li class="px-4"><a href="#Contact" class="text-white text-lg ">Contact
+                            Us</a>
+                    </li>
+                    <li class="px-4 text-center "><a href="#navbar" class="text-white text-lg">Redressal Process</a>
+                    </li>
+                </div>
+                <div>
+                    <li class="px-4"> <a href="{% url 'login' %}" class="text-white font-bold text-lg">Login</a></li>
+                </div>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="slider" data-current-index="1" class="flex justify-center mt-4">
+        <div class="flex items-center"><button id="prevButton" class="p-2 rounded-full bg-slate-200 "><i
+                    class="fa-solid fa-chevron-left fa-2xl"></i></button></div>
+        <img src="{% static 'img/Welcome.png' %}" class="h-96 w-2/3">
+        <img src="{% static 'img/Carousel-flow.png' %}" class="h-96 w-2/3">
+        <div class="flex items-center"> <button id="nextButton" class="p-2 rounded-full bg-slate-200"><i
+                    class="fa-solid fa-chevron-right fa-2xl z-10"></i></button>
+        </div>
+    </div>
+
+    <div id="About" class="mt-6 px-10 py-12 flex flex-col items-center">
+        <div class="text-center  text-2xl">
+            <h2>About Us</h2>
+        </div>
+        <div class="mt-6 w-1/2">
+            <p class="text-justify">M. H. Saboo Siddik (commonly known as MHSS or Saboo Siddik or Saboo) is an
+                engineering college located in Byculla at Saboo Siddik Polytechnic Road, Mumbai, India, affiliated with
+                the University of Mumbai.It is an 'A' Grade institution, and is accredited by AICTE.The college 154
+                staff (57-teaching, 97-non-teaching) and a student body of about 1200.The Mohammed Haji Saboo Siddik
+                Institute (A Muslim Minority Institution) owes its existence to the munificence of late Mohammed, son of
+                Haji Saboo Siddik, who bequeathed a large sum of money for establishing, conducting and managing this
+                Institution for imparting Vocational, Technical and Industrial training and education. The value of the
+                assets, so bequeathed, exceeded Rupees Three Crore at the time of donation.The Institution is managed
+                and administered by the Anjuman-i-Islam as the sole trustee, appointed by the Bombay High Court's decree
+                and scheme framed and sanctioned thereunder.The college building accommodates workshops, laboratories,
+                classrooms, lecture halls, drawing halls, student's common room, seminar hall, library, reading-rooms,
+                offices. The library of the college is housed in a separate building and it has reference sections and
+                reading-rooms for students and staff. A Seminar Hall was inaugurated by Zafar Saifullah IAS, Cabinet
+                Secretary of India & Dr. Raja Ramanna, Minister of State for Defence and an eminent scientist of India,
+                on the annual day celebrations on 9 April 2001.</p>
+        </div>
+    </div>
+
+    <div id="Contact" class="bg-green-500 py-10 px-12 ">
+        <div class="text-center  text-2xl text-white">
+            <h2>Contact Us</h2>
+        </div>
+        <div class="grid grid-cols-3 mt-10 text-white gap-10">
+            <div class="flex flex-col items-center bg-black py-6 px-6 bg-opacity-40 rounded-xl justify-center gap-6">
+                <div class="text-xl">Email</div>
+                <div class="text-lg">grs@mhssce.ac.in</div>
+            </div>
+            <div class="flex flex-col items-center bg-black py-6 px-6 bg-opacity-40 rounded-xl justify-center gap-6">
+                <div class="text-xl">Call us</div>
+                <div class="text-lg">+91 22 23012922</div>
+            </div>
+            <div class="flex flex-col items-center bg-black py-6 px-6 bg-opacity-40 rounded-xl gap-6">
+                <div class="text-xl">Address</div>
+                <div class="w-2/3 text-lg">8, Saboo Siddik Polytechnic Road, Byculla, Mumbai 400 008</div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="Footer" class="bg-slate-800">
+        <div>
+            <div class="flex py-10 px-12 gap-10">
+                <div>
+                    <h2 class="text-white text-xl font-semibold">Navigation</h2>
+                    <ul class="mt-4 flex flex-col gap-4">
+                        <li><a href="#About" class="text-white">About us</a></li>
+                        <li><a href="#navbar" class="text-white">Redressal process</a></li>
+                        <li><a href="{% url 'login' %}" class="text-white">Login</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="text-white">Admin login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-white text-xl font-semibold">Contact us</h2>
+                    <ul class="mt-4 flex flex-col gap-4">
+                        <li><a href="mailto:grievances@mhssce.ac.in" class="text-white">grievances@mhssce.ac.in</a></li>
+                        <li><a href="" class="text-white">+91 22 23012922</a></li>
+                    </ul>
+                </div>
+                <div class="text-white ">
+                    <h2 class="text-xl font-semibold">M.H. Saboo Siddik College</h2>
+                    <div class="w-2/3 mt-4">
+                        8, Saboo Siddik Polytechnic Road, Byculla,
+                        Mumbai 400 008
+                    </div>
+                </div>
+            </div>
+            <div class="text-white text-sm font-light p-2">&copy; Copyright M.H.S.S.C.E 2023</div>
+        </div>
+
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const currentIndex = parseInt(slider.getAttribute('data-current-index'));
+        const images = Array.from(slider.getElementsByTagName('img'));
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+
+        let currentImageIndex = currentIndex - 1; // Adjust for 0-based index
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                if (i === index) {
+                    img.style.display = 'block';
+                } else {
+                    img.style.display = 'none';
+                }
+            });
+        }
+
+        function back() {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+                showImage(currentImageIndex);
+            }
+        }
+
+        function next() {
+            if (currentImageIndex < images.length - 1) {
+                currentImageIndex++;
+                showImage(currentImageIndex);
+            } else {
+                currentImageIndex = 0;
+                showImage(currentImageIndex);
+            }
+        }
+
+        showImage(currentImageIndex);
+
+        prevButton.addEventListener('click', back);
+        nextButton.addEventListener('click', next);
+    </script>
+    <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
