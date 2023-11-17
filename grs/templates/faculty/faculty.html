@@ -1,4 +1,4 @@
-{% extends 'base.html'%}
+{% extends 'faculty/base.html'%}
 {% load static %}
 
 {% block body%}
@@ -6,7 +6,7 @@
     <div class="text-center text-xl p-4 font-extralight">
         Grievance redressal system of MHSSCE
     </div>
-    <div class="card-container">
+    <div class="card-container flex gap-4 ml-6 mr-6 md:flex-row flex-col">
         <div class="card shadow" style="color: green;border-radius:0;">
             <div class="card-title">Solved</div>
             <div class="card-subtitle">{{solved}}</div>
@@ -62,14 +62,12 @@
                             </div>
                         </div>
                         <div class="grid grid-cols-2">
-                            <div class="px-4 py-2 font-semibold">Email.</div>
-                            <div class="px-4 py-2">
-                                <a class="text-blue-800" href="mailto:jane@example.com">{{ user.email}}</a>
-                            </div>
+                            <div class="px-4 py-2 font-semibold">Email</div>
+                            <div class="px-4 py-2">{{ user.email}}</div>
                         </div>
                         <div class="grid grid-cols-2">
                             <div class="px-4 py-2 font-semibold">Educational qualification</div>
-                            <div class="px-4 py-2">{{ user.educational_qualification}}</div>
+                            <div class="px-4 py-2 ">{{ user.educational_qualification}}</div>
                         </div>
                     </div>
                     <div>

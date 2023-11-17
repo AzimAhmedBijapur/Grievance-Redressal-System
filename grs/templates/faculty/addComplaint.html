@@ -1,0 +1,62 @@
+{% extends 'faculty/base.html'%}
+{% load static %}
+{% block body%}
+<div id="content-add-complaint" class="mt-6 bg-slate-100 flex justify-center md:p-6"
+    style="background-color: rgb(241 245 249);">
+    <!-- form begins here -->
+    <form method="POST" class="rounded-xl shadow md:w-3/4 w-full ml-6 p-2 sm:ml-0 sm:mr-0"
+        enctype="multipart/form-data">
+        {% csrf_token%}
+        <div>
+            <h1>Add complaint</h1>
+        </div>
+        {% if messages %}
+        <div class="flex mt-4 justify-between rounded-lg mb-4 w-full">
+            <ul class="messages w-full text-center">
+                {% for message in messages %}
+                <div class="bg-green-200 p-5 w-full text-green-900 rounded-lg ">
+                    <li style="list-style-type: none;">{{ message }}</li>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div class="field">
+            <div><label for="category">Category</label></div>
+            <div class="input-fields"><select id="category" name="category" data-te-select-init>
+                    <option value="Academic">Academic</option>
+                    <option value="Administrative">Administrative</option>
+                    <option value="Interpersonal">Interpersonal</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
+                </select></div>
+        </div>
+        <br>
+        <div class="field">
+            <div><label for="subject">Subject</label></div>
+            <div class="input-fields">
+                <input type="text" id="subject" name="subject" required>
+            </div>
+        </div>
+        <br>
+        <div class="field">
+            <div class="w-full"><label for="description">Description</label></div>
+            <div class="input-fields">
+                <textarea name="description" id="description" rows="10" required></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="field">
+            <div class=""><label for="file-up">Upload documents (if any)</label></div>
+            <div class="input-fields overflow-hidden">
+                <input type="file" name="file-up" id="file-up" required>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="field">
+            <input type="submit" id="submitComplaint"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" value="Submit">
+        </div>
+    </form>
+</div>
+{% endblock%}

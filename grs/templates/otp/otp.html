@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRS</title>
+    <link rel="stylesheet" href="{% static 'src/out.css'%}">
+    <link rel="stylesheet" href="{% static 'src/styles.css'%}">
+</head>
+
+<body>
+    <div id="container" class="grid-cols-2">
+        <!-- sidenav begins -->
+        {% block sidebar%}
+        <div id="sidenav">
+            <div class="p-1 mt-2 mx-2 flex gap-2">
+                <img src="{% static 'img/logo-hq.png'%}" class="h-16 rounded-full">
+                <div class="flex-col">
+                    <span class="text-green-300">Anjuman-I-Islam's</span><br>
+                    <span>M. H. Saboo Siddik</span><br>
+                    <span>College of Engineering</span>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <div class="nav-link"><span><i class="fa-solid fa-circle-user"
+                                style="color: lightgoldenrodyellow;"></i></span>
+                        <li style="color: lightgoldenrodyellow;"> {{user.full_name}}</li>
+                    </div>
+                    <div class="nav-link"><span><i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
+                        <li><a href="{% url 'faculty'%}">Profile</a></li>
+                    </div>
+                    <div class="nav-link"><span><i class="fa-solid fa-plus" style="color: #ffffff;"></i></span>
+                        <li><a href="{% url 'add/complaint'%}">Add complaint</a></li>
+                    </div>
+                    <div class="nav-link"><span><i class="fa-solid fa-circle-check" style="color: #ffffff;"></i></span>
+                        <li><a href="{% url 'view/MyComplaints'%}">Comlpaints</a></li>
+                    </div>
+                    <div class="nav-link"><span><i class="fa-solid fa-right-from-bracket"
+                                style="color: #ffffff;"></i></span>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+        <!-- sidenav ends -->
+        {% endblock%}
+
+        {% block body %}
+        {% endblock %}
+
+    </div>
+    <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

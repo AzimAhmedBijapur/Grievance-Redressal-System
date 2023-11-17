@@ -1,0 +1,40 @@
+{% extends 'assessment/assessment-base.html'%}
+{% block body%}
+<div id="content">
+    <div class="text-center text-xl p-4">
+        Grievance redressal system of MHSSCE
+    </div>
+    <div class="card-container flex gap-4 ml-6 mr-6 md:flex-row flex-col">
+        <div class="card shadow" style="color: green;">
+            <div class="card-title">Solved</div>
+            <div class="card-subtitle">{{solved}}</div>
+        </div>
+        <div class="card shadow" style="color: red;">
+            <div class="card-title">Unsolved</div>
+            <div class="card-subtitle">{{unsolved}}</div>
+        </div>
+        <div class="card shadow" style="color:orange;">
+            <div class="card-title">In-progress</div>
+            <div class="card-subtitle">{{progress}}</div>
+        </div>
+    </div>
+    <div class="flex md:flex-row flex-col gap-6 p-4">
+        <div class="flex-1 p-4">
+            <canvas id="complaintChart1"></canvas>
+        </div>
+        <div class="flex-1 p-4">
+            <canvas id="complaintChart2"></canvas>
+        </div>
+    </div>
+    <div class="flex md:flex-row flex-col gap-6 p-4">
+        <div class="flex-1 p-4">
+            <canvas id="complaintChart3"></canvas>
+        </div>
+        <div class="flex-1 p-4">
+            <canvas id="complaintChart4"></canvas>
+        </div>
+    </div>
+
+</div>
+
+{% endblock%}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+          <!-- <img class="mx-auto h-40 w-auto" src="logo.png" alt="Your Company"> -->
+          <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign up</h2>
+        </div>
+      
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form class="space-y-6" action="#" method="POST">
+            <div>
+              <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
+              <div class="mt-2">
+                <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div><br>
+
+              <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Last name</label>
+              <div class="mt-2">
+                <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+            </div>
+
+            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+          <div class="mt-2">
+            <input id="email" name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+
+            <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
+          <div class="mt-2">
+            <input id="phone" name="phone" type="phone"  class="block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+
+          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+          <div class="mt-2">
+            <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+
+          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Confirm Password</label>
+          <div class="mt-2">
+            <input id="conformpassword" name="conformpassword" type="password" autocomplete="conform-password" required class="block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+
+          <div>
+            <button id="submit" name = "submit"class="flex w-full justify-center rounded-md bg-green-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</button>
+          </div>
+        </form>
+
+          <p class="mt-10 text-center text-sm text-gray-500">
+            Already Registered?
+            <a href="login.html" class="font-semibold leading-6 text-green-700 hover:text-green-700">Login here</a>
+          </p>
+        </div>
+      </div>
+
+      <script>
+        document.getElementById("submit").addEventListener("click", function()
+        {
+          const emailInput = document.getElementById("email");
+          const email = emailInput.value.trim().toLowerCase();
+          const PasswordInput = document.getElementById("password");
+          const password = PasswordInput.value.trim.toLowerCase();
+          const ConformpasswordInput = document.getElementById("conformpassword");
+          const conformpassword = ConformpasswordInput.value.trim.toLowerCase();
+
+          if (email.endsWith("@mhssce.ac.in"))
+          {
+            if (password == conformpassword)
+            {
+              alert("Account Registered Successfully");
+            }
+            else
+            {
+              alert("Password Did not match, Try Again");
+              PasswordInput.value = "";
+              ConformpasswordInput.value = "";
+            }
+          }
+          else
+          {
+            alert("Not a College Domain");
+            emailInput.value = "";
+          }
+        });
+      </script>
+</body>
+</html>

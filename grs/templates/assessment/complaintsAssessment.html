@@ -1,0 +1,133 @@
+{% extends 'assessment/assessment-base.html'%}
+{% block body%}
+<div id="content-view-complaints" class="mt-6 " style="background-color: rgb(241 245 249);">
+    <div class="ml-6 mb-6 mr-6" id="messageDiv">
+        {% for message in messages%}
+        <div class="bg-red-200 p-5 w-full rounded-lg text-red-700 flex justify-between">
+            <li style="list-style-type: none;">{{ message }}</li>
+            <button onclick="hideMessageDiv()" class="">X</button>
+        </div>
+        {% endfor%}
+    </div>
+    <div class="ml-4">
+        <h1>Complaints</h1>
+    </div>
+    <div class="ml-6">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="flex gap-6">
+                <div class="rounded-lg">
+                    <input type="text" placeholder="Enter ref. no" class="p-2 border " id="ref" name="ref" required
+                        pattern="\d+" oninvalid="setCustomValidity('Please enter only numeric values.')">
+                </div>
+                <div class="bg-indigo-500 font-bold rounded-lg">
+                    <input type="submit" class="px-3 py-2 text-white" value="Search">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="overflow-x-auto lg:overflow-hidden">
+        <div class="flex flex-col">
+            <div class="sm:-mx-6 lg:-mx-8">
+                <div class=" inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div class="overflow-hidden p-6">
+                        <table class=" min-w-full text-left text-md font-light bg-white">
+                            <thead class="border-b font-medium dark:border-neutral-500 bg-green-700 text-white">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Ref no.</th>
+                                    <th scope="col" class="px-6 py-4">Subject</th>
+                                    <th scope="col" class="px-6 py-4">Category</th>
+                                    <th scope="col" class="px-6 py-4">Date published</th>
+                                    <th scope="col" class="px-6 py-4">Description</th>
+                                    <th scope="col" class="px-6 py-4">Details</th>
+                                    <th scope="col" class="px-6 py-4">Status</th>
+                                    <th scope="col" class="px-6 py-4">Escalated to HO</th>
+                                    <th scope="col" class="px-6 py-4">Severity</th>
+                                    <th scope="col" class="px-6 py-4">Due Date</th>
+
+                                </tr>
+                            </thead>
+                            {% if not complaints %}
+                            <tbody class="p-6">
+                                <tr class="p-6">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-2xl p-6">No complaints !</td>
+                                </tr>
+                            </tbody>
+                            {% else %}
+                            <tbody>
+                                {% for complaint in complaints%}
+
+                                <tr class="border-b dark:border-neutral-500">
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.id}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.subject}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.category}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.date}}</td>
+                                    <td class="px-6 py-4">{{ complaint.description}}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        <div class="bg-indigo-500 px-3 py-2 rounded-md text-center"><a
+                                                href="{% url 'assessment/view/complaint' complaint.id  %}"
+                                                class="text-white font-bold">View</a>
+                                        </div>
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.status}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">{{ complaint.escalatetoHo}}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {% if complaint.severity == '1' %}
+                                        High
+                                        {% elif complaint.severity == '2' %}
+                                        Medium
+                                        {% elif complaint.severity == '3' %}
+                                        Low
+                                        {% else %}
+                                        Not Set
+                                        {% endif %}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {% if complaint.due_date %}
+                                        {{complaint.due_date}}
+                                        {% else %}
+                                        Not Set
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination text-center">
+        <span class="step-links flex items-center justify-center gap-10">
+            {% if complaints.has_previous %}
+            <a href="?page={{ complaints.previous_page_number }}" class="text-lg">&laquo; Previous</a>
+            {% endif %}
+
+            <span class="current-page text-lg">
+                Page {{ complaints.number }} of {{ complaints.paginator.num_pages }}
+            </span>
+
+            {% if complaints.has_next %}
+            <a href="?page={{ complaints.next_page_number }}" class="text-lg">Next &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+<script>
+    function hideMessageDiv() {
+        var messageDiv = document.getElementById('messageDiv');
+        if (messageDiv) {
+            messageDiv.style.display = 'none';
+        }
+    }
+</script>
+{% endblock%}

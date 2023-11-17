@@ -16,7 +16,7 @@
             <div class="p-1 mt-2 mx-2 flex gap-2 flex-col">
                 <div class="text-2xl text-center">Grievance Redressal System</div>
                 <div class="flex gap-2">
-                    <img src="{% static 'img/logo-hq.png'%}" class="h-16 rounded-full">
+                    <img src="{% static 'images/logo-hq.png'%}" class="h-16 rounded-full">
                     <div class="flex-col">
                         <span class="text-green-700 text-sm">Anjuman-I-Islam's</span><br>
                         <span class="text-sm">M. H. Saboo Siddik</span><br>
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <form method="POST" class="p-5 ">
+        <form method="POST" class="p-5 sm:p-1 ">
             {% csrf_token %}
             <div class="field flex flex-col gap-3">
                 <div class="font-bold"><label for="uname">Email</label></div>
@@ -47,6 +47,7 @@
                         <option value="Faculty">Faculty</option>
                         <option value="Review Committee">Review Committee</option>
                         <option value="Assessment Committee">Assessment Committee</option>
+                        <option value="HO">Head Office</option>
                     </select></div>
             </div>
             <br>
@@ -71,9 +72,12 @@
             </div>
             {% endif %}
             <div class="flex justify-center mt-4">
-                <p>Don't have an account? &nbsp;<a href="{% url 'register' %}" class="underline"
+                <p>Don't have an account? &nbsp;<a href="{% url 'otp_verification' %}" class="underline"
                         style="color: blue;">Sign
                         Up</a></p>
+            </div>
+            <div class="flex justify-center mt-4">
+                <p><a href="{% url 'index' %}" class="underline" style="color: blue;">Home</a></p>
             </div>
         </form>
     </div>

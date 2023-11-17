@@ -18,16 +18,16 @@
                     LOGIN</a>
             </div>
         </div>
-        <div class="flex justify-between items-center bg-blue-50 px-24">
-            <div class="flex items-center gap-4 p-4">
-                <img src="{% static 'img/logo-hq.png' %}" alt="" class="h-24 ml-6 rounded-full">
+        <div class="flex justify-end md:justify-between items-center bg-blue-50 md:px-24">
+            <div class="flex-1 flex items-center md:gap-4 p-2 md:p-4">
+                <img src="{% static 'images/logo-hq.png' %}" alt="" class="h-24 ml-6 rounded-full">
                 <div class="items-center">
                     <div class="text-green-600 font-extralight">Anjuman-I-Islam's</div>
                     <div class="font-light text-black">M. H. Saboo Siddik </div>
                     <div class="font-light text-black">College of Engineering</div>
                 </div>
             </div>
-            <div class="">
+            <div class="flex-1">
                 <div class="text-3xl ml-6 text-black font-extralight">Grievance Redressal Portal
                 </div>
             </div>
@@ -42,7 +42,7 @@
                     <li class="px-4"><a href="#Contact" class="text-white text-lg ">Contact
                             Us</a>
                     </li>
-                    <li class="px-4 text-center "><a href="#navbar" class="text-white text-lg">Redressal Process</a>
+                    <li class="px-4 text-center "><a href="#process" class="text-white text-lg">Redressal Process</a>
                     </li>
                 </div>
                 <div>
@@ -52,53 +52,89 @@
         </nav>
     </div>
 
-    <div id="slider" data-current-index="1" class="flex justify-center mt-4">
-        <div class="flex items-center"><button id="prevButton" class="p-2 rounded-full bg-slate-200 "><i
-                    class="fa-solid fa-chevron-left fa-2xl"></i></button></div>
-        <img src="{% static 'img/Welcome.png' %}" class="h-96 w-2/3">
-        <img src="{% static 'img/Carousel-flow.png' %}" class="h-96 w-2/3">
-        <div class="flex items-center"> <button id="nextButton" class="p-2 rounded-full bg-slate-200"><i
-                    class="fa-solid fa-chevron-right fa-2xl z-10"></i></button>
+    <div class="flex md:flex-row flex-col p-6 md:p-10 items-center ">
+        <div class="md:w-1/2">
+            <div><img src="{% static 'images/college.png' %}" alt="" class="rounded-xl"></div>
+        </div>
+
+        <div id="About" class="mt-6 flex flex-col items-center w-full md:w-2/3 md:px-12 ">
+            <div class="text-center  text-3xl">
+                <h2>About Us</h2>
+            </div>
+            <div class="mt-6">
+                <p class="text-justify">M. H. Saboo Siddik, also known as MHSS or Saboo Siddik, is an 'A' Grade
+                    engineering college located in Byculla, Mumbai, India. Affiliated with the University of Mumbai and
+                    accredited by AICTE, it boasts a staff of 154 (comprising 57 teaching and 97 non-teaching members)
+                    and serves approximately 1200 students. Established as a Muslim Minority Institution, it owes its
+                    creation to the generous donation of Mohammed, the son of Haji Saboo Siddik, who contributed a
+                    substantial sum to establish the institution for vocational, technical, and industrial education.
+                    Managed and administered by the Anjuman-i-Islam, the college provides various facilities, including
+                    workshops, laboratories, classrooms, a seminar hall, library, and reading rooms. Notably, a Seminar
+                    Hall was inaugurated in 2001 by dignitaries, Zafar Saifullah IAS and Dr. Raja Ramanna, during the
+                    annual day celebrations.</p>
+            </div>
         </div>
     </div>
+    <div class="flex flex-col md:flex-row  py-10 items-center" id="process">
+        <div class="flex-1">
+            <div class="px-10">
+                <h2 class="text-3xl">Redressal Process</h2>
+            </div>
+            <div class="px-10 pb-6">
+                <dl class="mt-6">
+                    <dt class="font-semibold text-lg">Register</dt>
+                    <dd class="text-justify">To initiate the process, faculty members should begin by visiting the login
+                        page and selecting the "Sign Up" option. This will prompt them to provide essential registration
+                        details, including their name, email address, and contact information. Once these details are
+                        submitted, faculty members will have successfully created their account.</dd>
 
-    <div id="About" class="mt-6 px-10 py-12 flex flex-col items-center">
-        <div class="text-center  text-2xl">
-            <h2>About Us</h2>
+                    <dt class="font-semibold text-lg">Login</dt>
+                    <dd class="text-justify">With the account created, faculty members can now log in to their
+                        personalized dashboard using the credentials they've just established. The dashboard serves as
+                        the central control center for all grievance-related activities, providing an intuitive and
+                        easy-to-navigate interface.</dd>
+
+                    <dt class="font-semibold text-lg">Lodge grievance</dt>
+                    <dd class="text-justify">Inside the dashboard, faculty members will find the "Add complaint"
+                        section. This is where they can initiate the grievance process. It's important for them to
+                        provide a detailed description of the grievance and attach any relevant supporting documents.
+                        This step ensures that their concerns are thoroughly understood.</dd>
+
+                    <dt class="font-semibold text-lg">Track grievance</dt>
+                    <dd class="text-justify">Throughout the grievance process, faculty members can rely on their
+                        dashboard for real-time updates on the status of their complaint. They can visit the
+                        "Complaints" section to view status of their complaints. Solved complaints are available in the
+                        "Solved Complaints" section. From the moment of submission
+                        to the final resolution, they will be kept informed at every stage. This transparency is
+                        designed to instill confidence in the process.</dd>
+
+                    <dt class="font-semibold text-lg">Download Reports</dt>
+                    <dd class="text-justify">Once a complaint is successfully resolved, faculty members can access and
+                        download the resolution and investigation reports. These documents provide a comprehensive
+                        account of the actions taken to address the grievance. They serve as tangible records of the
+                        process, ensuring transparency and accountability.</dd>
+                </dl>
+            </div>
         </div>
-        <div class="mt-6 w-1/2">
-            <p class="text-justify">M. H. Saboo Siddik (commonly known as MHSS or Saboo Siddik or Saboo) is an
-                engineering college located in Byculla at Saboo Siddik Polytechnic Road, Mumbai, India, affiliated with
-                the University of Mumbai.It is an 'A' Grade institution, and is accredited by AICTE.The college 154
-                staff (57-teaching, 97-non-teaching) and a student body of about 1200.The Mohammed Haji Saboo Siddik
-                Institute (A Muslim Minority Institution) owes its existence to the munificence of late Mohammed, son of
-                Haji Saboo Siddik, who bequeathed a large sum of money for establishing, conducting and managing this
-                Institution for imparting Vocational, Technical and Industrial training and education. The value of the
-                assets, so bequeathed, exceeded Rupees Three Crore at the time of donation.The Institution is managed
-                and administered by the Anjuman-i-Islam as the sole trustee, appointed by the Bombay High Court's decree
-                and scheme framed and sanctioned thereunder.The college building accommodates workshops, laboratories,
-                classrooms, lecture halls, drawing halls, student's common room, seminar hall, library, reading-rooms,
-                offices. The library of the college is housed in a separate building and it has reference sections and
-                reading-rooms for students and staff. A Seminar Hall was inaugurated by Zafar Saifullah IAS, Cabinet
-                Secretary of India & Dr. Raja Ramanna, Minister of State for Defence and an eminent scientist of India,
-                on the annual day celebrations on 9 April 2001.</p>
+        <div class=" flex-1 flex justify-center items-center"><img src="{% static 'images/P2.png'%}" alt="" class="p-4">
         </div>
     </div>
-
-    <div id="Contact" class="bg-green-500 py-10 px-12 ">
-        <div class="text-center  text-2xl text-white">
+    <div id="Contact" class="bg-green-500 py-10 px-12 mt-6">
+        <div class="text-center text-2xl text-white">
             <h2>Contact Us</h2>
         </div>
-        <div class="grid grid-cols-3 mt-10 text-white gap-10">
-            <div class="flex flex-col items-center bg-black py-6 px-6 bg-opacity-40 rounded-xl justify-center gap-6">
+        <div class="md:grid md:grid-cols-3 mt-10 text-white gap-10" id="contact-content">
+            <div
+                class="flex flex-col items-center mb-6 bg-black py-6 px-6 bg-opacity-40 rounded-xl justify-center gap-6">
                 <div class="text-xl">Email</div>
                 <div class="text-lg">grs@mhssce.ac.in</div>
             </div>
-            <div class="flex flex-col items-center bg-black py-6 px-6 bg-opacity-40 rounded-xl justify-center gap-6">
+            <div
+                class="flex flex-col items-center bg-black mb-6 py-6 px-6 bg-opacity-40 rounded-xl justify-center gap-6">
                 <div class="text-xl">Call us</div>
                 <div class="text-lg">+91 22 23012922</div>
             </div>
-            <div class="flex flex-col items-center bg-black py-6 px-6 bg-opacity-40 rounded-xl gap-6">
+            <div class="flex flex-col items-center bg-black mb-6 py-6 px-6 bg-opacity-40 rounded-xl gap-6">
                 <div class="text-xl">Address</div>
                 <div class="w-2/3 text-lg">8, Saboo Siddik Polytechnic Road, Byculla, Mumbai 400 008</div>
             </div>
@@ -108,24 +144,24 @@
 
     <div id="Footer" class="bg-slate-800">
         <div>
-            <div class="flex py-10 px-12 gap-10">
+            <div class="flex md:flex-row flex-col py-10 px-12 gap-10">
                 <div>
                     <h2 class="text-white text-xl font-semibold">Navigation</h2>
                     <ul class="mt-4 flex flex-col gap-4">
                         <li><a href="#About" class="text-white">About us</a></li>
-                        <li><a href="#navbar" class="text-white">Redressal process</a></li>
+                        <li><a href="#process" class="text-white">Redressal process</a></li>
                         <li><a href="{% url 'login' %}" class="text-white">Login</a></li>
                         <li><a href="{% url 'admin:index' %}" class="text-white">Admin login</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-white text-xl font-semibold">Contact us</h2>
+                    <h2 class="text-white text-xl font-semibold mt-10">Contact us</h2>
                     <ul class="mt-4 flex flex-col gap-4">
                         <li><a href="mailto:grievances@mhssce.ac.in" class="text-white">grievances@mhssce.ac.in</a></li>
                         <li><a href="" class="text-white">+91 22 23012922</a></li>
                     </ul>
                 </div>
-                <div class="text-white ">
+                <div class="text-white mt-10">
                     <h2 class="text-xl font-semibold">M.H. Saboo Siddik College</h2>
                     <div class="w-2/3 mt-4">
                         8, Saboo Siddik Polytechnic Road, Byculla,
@@ -138,14 +174,14 @@
 
     </div>
 
-    <script>
+    <!-- <script>
         const slider = document.getElementById('slider');
         const currentIndex = parseInt(slider.getAttribute('data-current-index'));
         const images = Array.from(slider.getElementsByTagName('img'));
         const prevButton = document.getElementById('prevButton');
         const nextButton = document.getElementById('nextButton');
 
-        let currentImageIndex = currentIndex - 1; // Adjust for 0-based index
+        let currentImageIndex = currentIndex - 1;
 
         function showImage(index) {
             images.forEach((img, i) => {
@@ -174,11 +210,24 @@
             }
         }
 
+        function autoSlide() {
+            next();
+        }
+
         showImage(currentImageIndex);
 
         prevButton.addEventListener('click', back);
         nextButton.addEventListener('click', next);
-    </script>
+
+        // Start automatic sliding with a 2-second interval 
+        const intervalId = setInterval(autoSlide, 3000);
+
+        // Stop automatic sliding when the user interacts with the slider 
+        slider.addEventListener('click', () => {
+            clearInterval(intervalId);
+        });
+    </script> -->
+
     <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
 
 </body>

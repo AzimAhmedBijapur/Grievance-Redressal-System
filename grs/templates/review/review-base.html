@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRS</title>
+    <link rel="stylesheet" href="{% static 'src/out.css' %}">
+    <link rel="stylesheet" href="{% static 'src/styles.css' %}">
+
+</head>
+
+<body class="bg-slate-100">
+    <div id="container" style="display: block !important;">
+        <div class="flex justify-between py-3 bg-slate-100 px-7">
+
+            <div class="" id="burger"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="w-8 h-8 pb-2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </div>
+
+            <ul class=" gap-6 text-md font-semibold hidden" id="menu">
+                <li class=""><img src="{% static 'images/logo-hq.png' %}" alt="" class="h-12 rounded-full"
+                        style="width: calc(24px + 1vw); margin-left:1rem;"></li>
+                <li class="p-2"><a href="{% url 'review'%}">Dashboard</a></li>
+                <li class="p-2"><a href="{% url 'review/view/complaints'%}">Complaints</a></li>
+                <li class="p-2"><a href="{% url 'logout'%}">Logout</a></li>
+            </ul>
+            <div class="h-full p-2 mr-2 flex items-center text-md font-semibold" style="margin-right: 1rem;">Welcome,
+                {{user.full_name}}</div>
+        </div>
+        {% block body %}
+        {% endblock body%}
+
+    </div>
+    <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
+    <script>
+        const burger = document.getElementById('burger');
+        const menu = document.getElementById('menu');
+        burger.addEventListener('click', () => {
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            }
+            else {
+                menu.style.display = 'block';
+            }
+        });
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
+    <script>
+        // for chart 1
+        var complaintData = {
+            labels: ['Solved', 'Unsolved', 'In Progress'],
+            datasets: [{
+                data: [{{ solved_academic }},
+            {{ unsolved_academic }},
+            {{ progress_academic }}],
+        backgroundColor: [
+            'green',
+            'red',
+            'orange'
+        ],
+            borderWidth: 1
+        }]
+        };
+
+        // Chart configuration
+        var chartConfig = {
+            type: 'bar',
+            data: complaintData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 5
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Academic'
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        // Create the chart
+        var ctx = document.getElementById('complaintChart1').getContext('2d');
+        var myChart = new Chart(ctx, chartConfig);
+    </script>
+    <script>
+        // for chart 1
+        var complaintData = {
+            labels: ['Solved', 'Unsolved', 'In Progress'],
+            datasets: [{
+                label: 'Complaint Status',
+                data: [{{ solved_administrative }},
+            {{ unsolved_administrative }},
+            {{ progress_administrative }}],
+        backgroundColor: [
+            'green',
+            'red',
+            'orange'
+        ],
+            borderWidth: 1
+            }]
+        };
+
+        // Chart configuration
+        var chartConfig = {
+            type: 'bar',
+            data: complaintData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 5
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Administrative'
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        // Create the chart
+        var ctx = document.getElementById('complaintChart2').getContext('2d');
+        var myChart = new Chart(ctx, chartConfig);
+    </script>
+
+    <script>
+        // for chart 1
+        var complaintData = {
+            labels: ['Solved', 'Unsolved', 'In Progress'],
+            datasets: [{
+                label: 'Complaint Status',
+                data: [{{ solved_interpersonal }},
+            {{ unsolved_interpersonal }},
+            {{ progress_interpersonal }}],
+        backgroundColor: [
+            'green',
+            'red',
+            'orange'
+        ],
+            borderWidth: 1
+            }]
+        };
+
+        // Chart configuration
+        var chartConfig = {
+            type: 'bar',
+            data: complaintData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 5
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Interpersonal'
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        // Create the chart
+        var ctx = document.getElementById('complaintChart3').getContext('2d');
+        var myChart = new Chart(ctx, chartConfig);
+    </script>
+    <script>
+        // for chart 1
+        var complaintData = {
+            labels: ['Solved', 'Unsolved', 'In Progress'],
+            datasets: [{
+                label: 'Complaint Status',
+                data: [{{ solved_miscellaneous }},
+            {{ unsolved_miscellaneous }},
+            {{ progress_miscellaneous }}],
+        backgroundColor: [
+            'green',
+            'red',
+            'orange'
+        ],
+            borderWidth: 1
+            }]
+        };
+
+        // Chart configuration
+        var chartConfig = {
+            type: 'bar',
+            data: complaintData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 5
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Miscellaneous' // Your title here
+                    },
+                    legend: {
+                        display: false // Hide legend
+                    }
+                }
+            }
+        };
+
+        // Create the chart
+        var ctx = document.getElementById('complaintChart4').getContext('2d');
+        var myChart = new Chart(ctx, chartConfig);
+    </script>
+
+</body>
+
+</html>

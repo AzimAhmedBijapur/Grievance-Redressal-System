@@ -1,11 +1,1 @@
-{
-    "scripts": {
-        "dev": "npx tailwindcss -i ./static/src/input.css -o ./static/src/out.css --watch"
-    },
-    "devDependencies": {
-        "tailwindcss": "^3.3.3"
-    },
-    "dependencies": {
-        "alpinejs": "^3.13.0"
-    }
-}
+{"scripts":{"dev":"npx tailwindcss -i ./static/src/input.css -o ./static/src/out.css --watch"},"devDependencies":{"tailwindcss":"^3.3.3"}}

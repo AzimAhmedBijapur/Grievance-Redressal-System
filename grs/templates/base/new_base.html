@@ -1,0 +1,175 @@
+<!-- This document will only be shown when user is not loged in -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'src/out.css'%}">
+    <link rel="stylesheet" href="{% static 'src/styles.css'%}">
+    {% load static %}
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Navbar starts here -->
+    <div class="main">
+        <div class="bg-green-700 text-white">
+            <div class="container mx-auto py-2 flex justify-between items-center">
+                <div class="tophead_left">
+                    <ul class="flex items-center space-x-4">
+                        <li class="gov">
+                            <span class="lang-hin">अंजुमन-ए-इस्लाम<br>Anjuman-I-Islam</span>
+                        </li>
+                        <li class="ministry">
+                            <span class="lang-hin">कुलप्रशासन, कर्मचारी शिकायत और पेंशन विभाग<br>Department of Faculty,
+                                Staff Grievances &amp; Pensions</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tophead_right">
+                    <ul class="flex items-center space-x-4">
+                        <li>
+                            <a href="#" class="loginlinks">
+                                <span class="hidden sm:block">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="loginlinks">
+                                <span class="hidden sm:block">Contact Us</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="loginlinks">
+                                <span class="hidden sm:block">About Us</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="loginlinks">
+                                <span class="hidden sm:block">FAQs/Help</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="head bg-white">
+            <div class="container mx-auto py-4 flex justify-between items-center">
+                <div class="logo" style="width: 400px">
+                    <a href="{% url 'home' %}"><img img src="{% static 'images/new_logo.png' %}" alt="CFGRS Logo"></a>
+                </div>
+                <div class="title-main text-center">
+                    <h1 class="text-3xl font-semibold">CFGRS</h1>
+                    <span class="text-sm text-gray-600">Centralized Faculty Grievance Redressal System</span>
+                </div>
+            </div>
+        </div>
+        <div class="bg-green-700">
+            <div class="container mx-auto">
+                <nav class="flex justify-between items-center py-4">
+                    <button class="lg:hidden ml-auto text-white">
+                        <span class="navbar-toggler-icon">&nbsp;</span>
+                    </button>
+                    <div class="hidden lg:flex space-x-4">
+                        <div class="nav-item dropdown relative">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" aria-haspopup="true"
+                                aria-expanded="false">View Status</a>
+
+                        </div>
+                        <div class="nav-item dropdown relative">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" aria-haspopup="true"
+                                aria-expanded="false">
+                                Committee Members
+                            </a>
+                            <ul class="dropdown-menu absolute hidden text-white bg-dark mt-2">
+                            </ul>
+                        </div>
+                        <div class="nav-item dropdown relative">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" aria-haspopup="true"
+                                aria-expanded="false">
+                                Redress Process
+                            </a>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 text-white">
+                        <div class="signIn">
+                            <a class="btn btn-signIn text-white" href="#">
+                                Login
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br>
+    <div class="main-content">
+        <div class="container mx-auto">
+            <!-- Add your content here using Tailwind CSS classes -->
+        </div>
+    </div>
+    <!-- Navbar ends  here -->
+
+
+
+    <!-- Include Tailwind CSS CDN and any other JavaScript libraries as needed -->
+
+
+
+
+
+    <!-- body starts here -->
+    {% block body%}
+
+
+    {% endblock body%}
+    <!-- body ends here -->
+
+
+    <!-- Footer starts here-->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <!-- Footer Logo and Links -->
+                <div class="col-span-1 sm:col-span-2 md:col-span-1">
+
+                    <img src="{% static 'images/logo-hq.png' %}" alt="Grievance Redressal System"
+                        class="w-40 h-40 object-cover mb-4">
+                    <p class="text-gray-300">Centralized Public Grievance Redress And Monitoring System</p>
+                    <div class="mt-4">
+                        <a href="/Home/AboutUs" class="text-blue-400 hover:text-blue-300 block mb-2">About Us</a>
+                        <a href="/Home/ContactUs" class="text-blue-400 hover:text-blue-300 block mb-2">Contact Us</a>
+                        <a href="/Home/Faq" class="text-blue-400 hover:text-blue-300 block">FAQs/Help</a>
+                    </div>
+                </div>
+
+                <!-- Footer Contact Info -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
+                    <p class="text-gray-300">Address: Your Address, City, State, Zip Code</p>
+                    <p class="text-gray-300">Email: info@grievance-system.com</p>
+                    <p class="text-gray-300">Phone: +1-123-456-7890</p>
+                </div>
+
+                <!-- Social Media Links -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Follow Us</h3>
+                    <a href="#" class="text-blue-400 hover:text-blue-300 block mb-2">Facebook</a>
+                    <a href="#" class="text-blue-400 hover:text-blue-300 block mb-2">Twitter</a>
+                    <a href="#" class="text-blue-400 hover:text-blue-300 block mb-2">LinkedIn</a>
+                    <a href="#" class="text-blue-400 hover:text-blue-300 block">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer ends here-->
+
+
+</body>
+
+</html>

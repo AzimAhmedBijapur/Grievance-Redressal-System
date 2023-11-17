@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRS</title>
+    <link rel="stylesheet" href="{% static 'src/out.css' %}">
+    <link rel="stylesheet" href="{% static 'src/register.css' %}">
+</head>
+
+<body class="flex justify-center py-5 px-3 bg-slate-100">
+    <div class="p-10 bg-white w-full md:w-1/2 rounded-xl">
+        <div class="flex flex-col gap-6 justify-center mb-10 items-center bg-blue-50 p-4 rounded-lg md:flex-row">
+            <img src="{% static 'images/logo-hq.png' %}" class="rounded-full h-28">
+            <div class="flex-col">
+                <span class="text-green-700 text-xl">Anjuman-I-Islam's</span><br>
+                <span class="text-lg">M. H. Saboo Siddik</span><br>
+                <span class="text-lg">College of Engineering</span>
+            </div>
+        </div>
+        <div>
+            <div class="mt-4 mb-4">
+                <ul>
+                    {% for msg in messages %}
+                    <li class="text-red-500" style="color: red;">{{ msg }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <form method="POST" action="" class="flex flex-col gap-10 px-1 md:px-12">
+                {% csrf_token %}
+                <!-- <h1 class="text-center text-3xl font-bold">Register</h1> -->
+                <div>
+                    <div class="font-bold"><label for="otp">Enter otp:</label></div>
+                    <div class="w-full"><input type="text" id="otp" name="otp"></div>
+
+                </div>
+                <div class="flex justify-center">
+                    <input type="submit" value="Verify"
+                        class=" w-2/3 bg-green-500 rounded-sm px-3 py-3 text-white font-bold md:w-full">
+                </div>
+            </form>
+        </div>
+
+
+
+</body>
+
+</html>

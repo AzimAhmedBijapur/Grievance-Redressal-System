@@ -1,14 +1,14 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from django.contrib.auth.models import User
 from .models import CustomUser
-from .models import Complaint  
-from django.forms import ModelForm
+
 
 class CreateUserForm(UserCreationForm):
     # Custom fields
-    full_name = forms.CharField(required=True, max_length=50,label='Full Name')
-    gender = forms.ChoiceField(choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], required=True)
+    full_name = forms.CharField(
+        required=True, max_length=50, label='Full Name')
+    gender = forms.ChoiceField(
+        choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], required=True)
     role = forms.ChoiceField(choices=[('Faculty', 'Faculty')], required=True)
     contact_no = forms.CharField(max_length=10, required=True)
     telephone_no = forms.CharField(max_length=10, required=False)
@@ -17,37 +17,44 @@ class CreateUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
     educational_qualification = forms.CharField(max_length=100, required=True)
     department = forms.ChoiceField(choices=[
-    ('Computer', 'Computer'),
-    ('CSE_AI_ML', 'CSE AI/ML'),
-    ('CSE_Blockchain_IOT', 'CSE Blockchain and IOT'),
-    ('Mechanical', 'Mechanical'),
-    ('Electronics', 'Electronics'),
-    ('Extc', 'Extc'),
-    ('Civil', 'Civil'),
-    ('IT', 'IT'),
-    ('Automobile', 'Automobile'),
-    ('Basic_Science_Humanities', 'Basic Science and Humanities')], required=True)
+        ('Computer', 'Computer'),
+        ('CSE_AI_ML', 'CSE AI/ML'),
+        ('CSE_Blockchain_IOT', 'CSE Blockchain and IOT'),
+        ('Mechanical', 'Mechanical'),
+        ('Electronics', 'Electronics'),
+        ('Extc', 'Extc'),
+        ('Civil', 'Civil'),
+        ('IT', 'IT'),
+        ('Automobile', 'Automobile'),
+        ('Basic_Science_Humanities', 'Basic Science and Humanities')], required=True)
 
     designation = forms.ChoiceField(choices=[
-    ('Assistant_Professor', 'Assistant Professor'),('HOD', 'HOD'),('Associate_Professor', 'Associate Professor'),('Lecturer', 'Lecturer')], required=True)
+        ('Assistant_Professor', 'Assistant Professor'), ('HOD', 'HOD'), ('Associate_Professor', 'Associate Professor'), ('Lecturer', 'Lecturer')], required=True)
 
-    permanent_employee =  forms.ChoiceField(choices=[('Yes', 'Yes'), ('No', 'No')], required=True)
-    date_of_probation = forms.DateField(required=False,widget=forms.DateInput(attrs={'type': 'date'}))
-    salary = forms.DecimalField(max_digits=10, decimal_places=2, required=True,label='Annual Salary')
-    payscale = forms.CharField(max_length=20, required=False,widget=forms.TextInput(attrs={'placeholder': 'e.g., 10-12'}),label='Annual Payscale in LPA')
+    permanent_employee = forms.ChoiceField(
+        choices=[('Yes', 'Yes'), ('No', 'No')], required=True)
+    date_of_probation = forms.DateField(
+        required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    salary = forms.DecimalField(
+        max_digits=10, decimal_places=2, required=True, label='Annual Salary')
+    payscale = forms.CharField(max_length=20, required=False, widget=forms.TextInput(
+        attrs={'placeholder': 'e.g., 10-12'}), label='Annual Payscale in LPA')
 
     def clean_email(self):
         email = self.cleaned_data['email']
         # Add custom validation logic here
         if not email.endswith('@mhssce.ac.in'):
-            raise forms.ValidationError("Email must be from mhssce.ac.in domain.")
-        existing_user = CustomUser.objects.filter(email=email).exclude(pk=self.instance.pk).first()
+            raise forms.ValidationError(
+                "Email must be from mhssce.ac.in domain.")
+        existing_user = CustomUser.objects.filter(
+            email=email).exclude(pk=self.instance.pk).first()
 
         if existing_user:
-            raise forms.ValidationError("This email address is already taken. Please choose a different one.")
+            raise forms.ValidationError(
+                "This email address is already taken. Please choose a different one.")
 
         return email
-    
+
     def save(self, commit=True):
         user = super(CreateUserForm, self).save(commit=False)
 
@@ -76,30 +83,36 @@ class CreateUserForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['full_name','email','password1', 'password2', 'gender', 'role','contact_no', 'telephone_no',
-                  'current_address', 'permanent_address','educational_qualification',
+        fields = ['full_name', 'email', 'password1', 'password2', 'gender', 'role', 'contact_no', 'telephone_no',
+                  'current_address', 'permanent_address', 'educational_qualification',
                   'department', 'designation', 'permanent_employee', 'date_of_probation', 'salary', 'payscale']
 
 
 class CreateMgmtUserForm(UserCreationForm):
     # Custom fields
-    full_name = forms.CharField(required=True, max_length=50,label='Full Name')
-    gender = forms.ChoiceField(choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], required=True)
-    role = forms.ChoiceField(choices=[('Review Committee', 'Review Committee'),('Assessment Committee', 'Assessment Committee')], required=True)
+    full_name = forms.CharField(
+        required=True, max_length=50, label='Full Name')
+    gender = forms.ChoiceField(
+        choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], required=True)
+    role = forms.ChoiceField(choices=[('Review Committee', 'Review Committee'), (
+        'Assessment Committee', 'Assessment Committee'), ('HO', 'HO')], required=True)
     email = forms.EmailField(required=True)
 
     def clean_email(self):
         email = self.cleaned_data['email']
         # Add custom validation logic here
         if not email.endswith('@mhssce.ac.in'):
-            raise forms.ValidationError("Email must be from mhssce.ac.in domain.")
-        existing_user = CustomUser.objects.filter(email=email).exclude(pk=self.instance.pk).first()
+            raise forms.ValidationError(
+                "Email must be from mhssce.ac.in domain.")
+        existing_user = CustomUser.objects.filter(
+            email=email).exclude(pk=self.instance.pk).first()
 
         if existing_user:
-            raise forms.ValidationError("This email address is already taken. Please choose a different one.")
+            raise forms.ValidationError(
+                "This email address is already taken. Please choose a different one.")
 
         return email
-    
+
     def save(self, commit=True):
         user = super(CreateMgmtUserForm, self).save(commit=False)
 
@@ -117,4 +130,5 @@ class CreateMgmtUserForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['full_name','email','password1', 'password2', 'gender', 'role']
+        fields = ['full_name', 'email', 'password1',
+                  'password2', 'gender', 'role']
