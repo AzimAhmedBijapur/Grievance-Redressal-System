@@ -209,8 +209,9 @@ def viewMySolvedComplaints(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @role_required(allowed_roles=['Faculty'])
 def download_complaint_report(request, filename):
-    file_directory = "complaints/reports/"
+    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/reports/"
     file_path = os.path.join(file_directory, filename)
+    print(file_path)
     if os.path.exists(file_path):
         # If the file exists, serve it for download
         with open(file_path, 'rb') as file:

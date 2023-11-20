@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import Http404
+from django.http import Http404, HttpResponse
+import os
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from grievances.models import Complaint
@@ -100,7 +101,7 @@ def viewDetailComplaints(request,cid):
     try:
         complaint = Complaint.objects.get(id=cid)
     except Complaint.DoesNotExist:
-        raise Http404("Complaint does not exist") 
+        raise Http404("Complaint does not exist")
     context = {
         "complaint":complaint
     }
@@ -178,7 +179,45 @@ def viewDetailComplaints(request,cid):
 
         except:
             messages.error(request, "Complaint not updated")
-            
+
         return redirect(request.get_full_path())
 
     return render(request,'review/complaintDetailsReview.html',context=context)
+
+# Download documents
+@login_required(login_url='login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@role_required(allowed_roles=['Review Committee'])
+def download_complaint_doc(request, filename):
+    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/documents/"
+    file_path = os.path.join(file_directory, filename)
+    print(file_path)
+    if os.path.exists(file_path):
+        # If the file exists, serve it for download
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(
+                file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    else:
+        # If the file does not exist, return an error response
+        return HttpResponse("File not found", status=404)
+
+# Download reports
+@login_required(login_url='login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@role_required(allowed_roles=['Review Committee'])
+def download_complaint_reports(request, filename):
+    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/reports/"
+    file_path = os.path.join(file_directory, filename)
+    print(file_path)
+    if os.path.exists(file_path):
+        # If the file exists, serve it for download
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(
+                file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    else:
+        # If the file does not exist, return an error response
+        return HttpResponse("File not found", status=404)

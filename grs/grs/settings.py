@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-gw2b(hfqi_dl15@q!(3nbns+bejkeyr9b3da1zfhp2wz&)^v86
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['AzimAhmedBijapur.pythonanywhere.com']
 
 
 # Application definition
@@ -163,8 +163,8 @@ EMAIL_USE_TLS = True
 
 JAZZMIN_SETTINGS = {
 
-    "site_logo": os.path.join(BASE_DIR, "static/images/logo-hq.png"),
-    "login_logo": os.path.join(BASE_DIR, "static/images/logo-hq.png"),
+    "site_logo": "/images/logo-hq.png",
+    "login_logo": "/images/logo-hq.png",
     "custom_css": "src/admin.css",
     "site_logo_classes": "img-circle",
     "welcome_sign": "Welcome to the Grievance redressal portal of MHSSCE !",

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import Http404
+from django.http import Http404,HttpResponse
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from grievances.models import Complaint
@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from grs.decorators import role_required
 from login.models import CustomUser
+import os
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required(login_url='login')
@@ -52,7 +53,7 @@ def assessment(request):
     'unsolved_miscellaneous': unsolved_complaints_miscellaneous,
     'progress_miscellaneous': progress_complaints_miscellaneous,
     }
-    return render(request,'assessment/assessment.html',context=count_complaints)
+    return render(request,'assessment/Assessment.html',context=count_complaints)
 
 
 
@@ -100,7 +101,7 @@ def viewDetailComplaints(request,cid):
     try:
         complaint = Complaint.objects.get(id=cid)
     except Complaint.DoesNotExist:
-        raise Http404("Complaint does not exist") 
+        raise Http404("Complaint does not exist")
     context = {
         "complaint":complaint
     }
@@ -112,7 +113,7 @@ def viewDetailComplaints(request,cid):
             messages.success(request, "Complaint updated")
         except:
             messages.error(request, "Complaint not updated")
-        
+
                  # Send ack mail to the admin staff
 
         mgmt_users = CustomUser.objects.filter(Q(role="Review Committee") | Q(role="Assessment Committee") | Q(is_superuser=True) | Q(username= complaint.user)).values_list('email',flat=True)
@@ -139,7 +140,46 @@ grs@mhssce
             recipient_list=email_list,
             fail_silently=False,
         )
-            
+
         return redirect(request.get_full_path())
 
     return render(request,'assessment/complaintDetailsAssessment.html',context=context)
+
+# Download documents
+@login_required(login_url='login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@role_required(allowed_roles=['Assessment Committee'])
+def download_complaint_doc(request, filename):
+    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/documents/"
+    file_path = os.path.join(file_directory, filename)
+    print(file_path)
+    if os.path.exists(file_path):
+        # If the file exists, serve it for download
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(
+                file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    else:
+        # If the file does not exist, return an error response
+        return HttpResponse("File not found", status=404)
+
+
+# Download reports
+@login_required(login_url='login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@role_required(allowed_roles=['Assessment Committee'])
+def download_complaint_reports(request, filename):
+    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/reports/"
+    file_path = os.path.join(file_directory, filename)
+    print(file_path)
+    if os.path.exists(file_path):
+        # If the file exists, serve it for download
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(
+                file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    else:
+        # If the file does not exist, return an error response
+        return HttpResponse("File not found", status=404)

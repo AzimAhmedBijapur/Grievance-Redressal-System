@@ -29,4 +29,5 @@ urlpatterns = [
     path('', include("review.urls")),
     path('', include("ho.urls")),
     path('', include("assessment.urls")),
+    path('', include("grievances.urls")),
 ]
