@@ -58,6 +58,7 @@ def verify(request):
 
             # Use a regex to check if the name follows the specified format
             name_pattern = re.compile(r'^[a-zA-Z.]+$')
+            # name_pattern = re.compile(r'^[a-zA-Z0-9.]+$')
 
             if name_pattern.match(name_without_domain):
                 # Name follows the specified format, send OTP

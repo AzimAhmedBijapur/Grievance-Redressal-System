@@ -38,7 +38,6 @@
                                     <th scope="col" class="px-6 py-4">Subject</th>
                                     <th scope="col" class="px-6 py-4">Category</th>
                                     <th scope="col" class="px-6 py-4">Date published</th>
-                                    <th scope="col" class="px-6 py-4">Description</th>
                                     <th scope="col" class="px-6 py-4">Report</th>
                                     <th scope="col" class="px-6 py-4">Status</th>
 
@@ -52,8 +51,6 @@
                                     <td class="whitespace-nowrap px-6 py-4">{{ complaint.subject}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ complaint.category}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ complaint.date}}</td>
-                                    <td class="px-6 py-4">{{ complaint.description}}
-                                    </td>
                                     <td class="whitespace-nowrap px-6 py-4">
                                         {% if complaint.report %}
                                         <a href="{{complaint.report.name}}"><i class="fa-solid fa-file fa-beat fa-xl"

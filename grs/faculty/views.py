@@ -22,8 +22,8 @@ def generate_otp():
 
 def send_otp_email(email, otp):
     subject = 'OTP Verification'
-    message = f'Your OTP for registration is: {otp}'
-    from_email = 'your-email@example.com'  # Use your verified email here
+    message = f'Your OTP for GRS registration is: {otp}'
+    from_email = 'grs <whalefry@gmail.com>'  # Use your verified email here
     recipient_list = [email]
 
     send_mail(subject, message, from_email, recipient_list)

@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="{% static 'src/home.css' %}">
     <link rel="stylesheet" href="{% static 'src/out.css' %}">
     <title>GRS</title>
+    <style>
+        #logo{
+            visibility:visible;
+        }
+        @media only screen and (max-width:400px){
+            #logo{
+            visibility:hidden;
+        }
+        }
+    </style>
 </head>
 
 <body>
@@ -18,10 +28,10 @@
                     LOGIN</a>
             </div>
         </div>
-        <div class="flex justify-end md:justify-between items-center bg-blue-50 md:px-24">
+        <div class="flex justify-end md:justify-start items-center bg-blue-50 md:px-24">
             <div class="flex-1 flex items-center md:gap-4 p-2 md:p-4">
                 <img src="{% static 'images/logo-hq.png' %}" alt="" class="h-24 ml-6 rounded-full">
-                <div class="items-center">
+                <div class="items-center" id="logo">
                     <div class="text-green-600 font-extralight">Anjuman-I-Islam's</div>
                     <div class="font-light text-black">M. H. Saboo Siddik </div>
                     <div class="font-light text-black">College of Engineering</div>
@@ -37,10 +47,10 @@
             <ul class="flex p-2 bg-green-500 justify-between">
                 <div class="flex">
                     <li class="px-4"><a href="#About" class="text-white text-lg">About
-                            Us</a>
+                            </a>
                     </li>
                     <li class="px-4"><a href="#Contact" class="text-white text-lg">Contact
-                            Us</a>
+                            </a>
                     </li>
                     <li class="px-4 text-center "><a href="#process" class="text-white text-lg">Redressal Process</a>
                     </li>
@@ -54,12 +64,12 @@
 
     <div class="flex md:flex-row flex-col p-6 md:p-10 items-center ">
         <div class="md:w-1/2">
-            <div><img src="{% static 'images/college.png' %}" alt="" class="rounded-xl"></div>
+            <div><img src="{% static 'images/college.png' %}" alt="" class="rounded"></div>
         </div>
 
         <div id="About" class="mt-6 flex flex-col items-center w-full md:w-2/3 md:px-12 ">
             <div class="text-center  text-3xl">
-                <h2>About Us</h2>
+                <h2 class="font-bold">About Us</h2>
             </div>
             <div class="mt-6">
                 <p class="text-justify animate-typing">M. H. Saboo Siddik, also known as MHSS or Saboo Siddik, is an 'A' Grade
@@ -78,41 +88,24 @@
     <div class="flex flex-col md:flex-row  py-10 items-center" id="process">
         <div class="flex-1">
             <div class="px-10">
-                <h2 class="text-3xl">Redressal Process</h2>
+                <h2 class="text-3xl font-bold">Redressal Process</h2>
             </div>
             <div class="px-10 pb-6">
                 <dl class="mt-6">
-                    <dt class="font-semibold text-lg">Register</dt>
-                    <dd class="text-justify">To initiate the process, faculty members should begin by visiting the login
-                        page and selecting the "Sign Up" option. This will prompt them to provide essential registration
-                        details, including their name, email address, and contact information. Once these details are
-                        submitted, faculty members will have successfully created their account.</dd>
+                    <dt class="font-semibold text-lg">1. Register</dt>
+                    <dd class="text-justify">Click on Login and then on Sign Up. Fill the details and register.</dd>
 
-                    <dt class="font-semibold text-lg">Login</dt>
-                    <dd class="text-justify">With the account created, faculty members can now log in to their
-                        personalized dashboard using the credentials they've just established. The dashboard serves as
-                        the central control center for all grievance-related activities, providing an intuitive and
-                        easy-to-navigate interface.</dd>
+                    <dt class="font-semibold text-lg mt-2">2. Login</dt>
+                    <dd class="text-justify">You can login with your college mail id and password you created while registering.</dd>
 
-                    <dt class="font-semibold text-lg">Lodge grievance</dt>
-                    <dd class="text-justify">Inside the dashboard, faculty members will find the "Add complaint"
-                        section. This is where they can initiate the grievance process. It's important for them to
-                        provide a detailed description of the grievance and attach any relevant supporting documents.
-                        This step ensures that their concerns are thoroughly understood.</dd>
+                    <dt class="font-semibold text-lg mt-2">3. Lodge grievance</dt>
+                    <dd class="text-justify">Login to the dashboard and click on add complaints to lodge a complaint.</dd>
 
-                    <dt class="font-semibold text-lg">Track grievance</dt>
-                    <dd class="text-justify">Throughout the grievance process, faculty members can rely on their
-                        dashboard for real-time updates on the status of their complaint. They can visit the
-                        "Complaints" section to view status of their complaints. Solved complaints are available in the
-                        "Solved Complaints" section. From the moment of submission
-                        to the final resolution, they will be kept informed at every stage. This transparency is
-                        designed to instill confidence in the process.</dd>
+                    <dt class="font-semibold text-lg mt-2">4. Track grievance</dt>
+                    <dd class="text-justify">You can track the status of grievance from the 'Complaints' section in your dashboard.</dd>
 
-                    <dt class="font-semibold text-lg">Download Reports</dt>
-                    <dd class="text-justify">Once a complaint is successfully resolved, faculty members can access and
-                        download the resolution and investigation reports. These documents provide a comprehensive
-                        account of the actions taken to address the grievance. They serve as tangible records of the
-                        process, ensuring transparency and accountability.</dd>
+                    <dt class="font-semibold text-lg mt-2">5. Download Reports</dt>
+                    <dd class="text-justify">Resolved grievances will be shown in 'Solved Complaints' section from where you can download the report.</dd>
                 </dl>
             </div>
         </div>
@@ -120,7 +113,7 @@
         </div>
     </div>
     <div id="Contact" class="bg-green-500 py-10 px-12 mt-6">
-        <div class="text-center text-2xl text-white">
+        <div class="text-center text-3xl text-white font-bold">
             <h2>Contact Us</h2>
         </div>
         <div class="md:grid md:grid-cols-3 mt-10 text-white gap-10" id="contact-content">
@@ -173,60 +166,6 @@
         </div>
 
     </div>
-
-    <!-- <script>
-        const slider = document.getElementById('slider');
-        const currentIndex = parseInt(slider.getAttribute('data-current-index'));
-        const images = Array.from(slider.getElementsByTagName('img'));
-        const prevButton = document.getElementById('prevButton');
-        const nextButton = document.getElementById('nextButton');
-
-        let currentImageIndex = currentIndex - 1;
-
-        function showImage(index) {
-            images.forEach((img, i) => {
-                if (i === index) {
-                    img.style.display = 'block';
-                } else {
-                    img.style.display = 'none';
-                }
-            });
-        }
-
-        function back() {
-            if (currentImageIndex > 0) {
-                currentImageIndex--;
-                showImage(currentImageIndex);
-            }
-        }
-
-        function next() {
-            if (currentImageIndex < images.length - 1) {
-                currentImageIndex++;
-                showImage(currentImageIndex);
-            } else {
-                currentImageIndex = 0;
-                showImage(currentImageIndex);
-            }
-        }
-
-        function autoSlide() {
-            next();
-        }
-
-        showImage(currentImageIndex);
-
-        prevButton.addEventListener('click', back);
-        nextButton.addEventListener('click', next);
-
-        // Start automatic sliding with a 2-second interval
-        const intervalId = setInterval(autoSlide, 3000);
-
-        // Stop automatic sliding when the user interacts with the slider
-        slider.addEventListener('click', () => {
-            clearInterval(intervalId);
-        });
-    </script> -->
 
     <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
 
