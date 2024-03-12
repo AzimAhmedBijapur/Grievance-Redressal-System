@@ -12,9 +12,42 @@ from grs.decorators import role_required
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import random
+from transformers import BertTokenizer, BertForSequenceClassification
+from torch.nn.functional import softmax
+import torch
+
+# semantic analysis
+
+model_name = 'bert-base-uncased'
+tokenizer = BertTokenizer.from_pretrained(model_name)
+model = BertForSequenceClassification.from_pretrained(model_name, num_labels=3)
+
+
+def perform_semantic_analysis(description):
+    # Tokenize the description
+    tokens = tokenizer(description, return_tensors='pt',
+                       truncation=True, padding=True)
+
+    # Make predictions
+    with torch.no_grad():
+        outputs = model(**tokens)
+
+    # Apply softmax to get probabilities
+    probabilities = softmax(outputs.logits, dim=1).squeeze()
+
+    # Choose the severity level with the highest probability
+    severity_levels = [1, 2, 3]
+    predicted_severity = severity_levels[torch.argmax(probabilities).item()]
+
+    return predicted_severity
+
+
+def analyze_complaint_severity(description):
+    severity = perform_semantic_analysis(description)
+    return severity
+
 
 # otp
-
 
 def generate_otp():
     return str(random.randint(100000, 999999))
@@ -62,13 +95,15 @@ def addComplaint(request):
         description = request.POST.get('description')
         documents = request.FILES['file-up']
         date = now()
+        severity = analyze_complaint_severity(description)
         complaint = Complaint.objects.create(
             user=request.user,
             category=category,
             subject=subject,
             description=description,
             documents=documents,
-            date=date
+            date=date,
+            severity=severity
         )
         messages.success(request, "Complaint registered successfully")
         # Send ack mail to the faculty itself
