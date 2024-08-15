@@ -1,1 +1,30 @@
-{"scripts":{"dev":"npx tailwindcss -i ./static/src/input.css -o ./static/src/out.css --watch"},"devDependencies":{"tailwindcss":"^3.3.3"}}
+{
+    "scripts": {
+        "dev": "npx tailwindcss -i ./static/src/input.css -o ./static/src/out.css --watch"
+    },
+    "devDependencies": {
+        "tailwindcss": "^3.4.10"
+    },
+    "name": "grs",
+    "version": "1.0.0",
+    "main": "tailwind.config.js",
+    "author": "azim ahmed",
+    "license": "ISC",
+    "description": "a grievance redressal portal for college faculties",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AzimAhmedBijapur/Grievance-Redressal-System.git"
+    },
+    "keywords": [
+        "django",
+        "mvt",
+        "grs"
+    ],
+    "bugs": {
+        "url": "https://github.com/AzimAhmedBijapur/Grievance-Redressal-System/issues"
+    },
+    "homepage": "https://github.com/AzimAhmedBijapur/Grievance-Redressal-System#readme",
+    "dependencies": {
+        "chart.js": "^4.4.3"
+    }
+}

@@ -1,3 +1,4 @@
+from pathlib import Path
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import Http404,HttpResponse
@@ -9,50 +10,21 @@ from django.db.models import Q
 import os
 from grs.decorators import role_required
 from login.models import CustomUser
+import environ
+from grs.dashboardCounts import complaintCounts
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+env = environ.Env()
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 @login_required(login_url='login')
 @cache_control(no_cache=True, must_revalidate=True,no_store=True)
 @role_required(allowed_roles=['HO'])
 def ho(request):
+
     user = request.user
-    solved_complaints_count = Complaint.objects.filter(status='Solved',escalatetoHo="Yes").count()
-    unsolved_complaints_count = Complaint.objects.filter(status='Unsolved',escalatetoHo="Yes").count()
-    progress_complaints_count = Complaint.objects.filter(status='In-Progress',escalatetoHo="Yes").count()
-
-    solved_complaints_academic = Complaint.objects.filter(status='Solved',category='Academic',escalatetoHo="Yes").count()
-    unsolved_complaints_academic= Complaint.objects.filter(status='Unsolved',category='Academic',escalatetoHo="Yes").count()
-    progress_complaints_academic = Complaint.objects.filter(status='In-Progress',category='Academic',escalatetoHo="Yes").count()
-
-    solved_complaints_administrative = Complaint.objects.filter(status='Solved', category='Administrative',escalatetoHo="Yes").count()
-    unsolved_complaints_administrative = Complaint.objects.filter(status='Unsolved', category='Administrative',escalatetoHo="Yes").count()
-    progress_complaints_administrative = Complaint.objects.filter(status='In-Progress', category='Administrative',escalatetoHo="Yes").count()
-
-    solved_complaints_interpersonal = Complaint.objects.filter(status='Solved', category='Interpersonal',escalatetoHo="Yes").count()
-    unsolved_complaints_interpersonal = Complaint.objects.filter(status='Unsolved', category='Interpersonal',escalatetoHo="Yes").count()
-    progress_complaints_interpersonal = Complaint.objects.filter(status='In-Progress', category='Interpersonal',escalatetoHo="Yes").count()
-
-    solved_complaints_miscellaneous = Complaint.objects.filter(status='Solved', category='Miscellaneous',escalatetoHo="Yes").count()
-    unsolved_complaints_miscellaneous = Complaint.objects.filter(status='Unsolved', category='Miscellaneous',escalatetoHo="Yes").count()
-    progress_complaints_miscellaneous = Complaint.objects.filter(status='In-Progress', category='Miscellaneous',escalatetoHo="Yes").count()
-
-    count_complaints = {
-    'solved':solved_complaints_count,
-    'unsolved':unsolved_complaints_count,
-    'progress':progress_complaints_count,
-    'solved_academic':solved_complaints_academic,
-    'unsolved_academic':unsolved_complaints_academic,
-    'progress_academic':progress_complaints_academic,
-    'solved_administrative': solved_complaints_administrative,
-    'unsolved_administrative': unsolved_complaints_administrative,
-    'progress_administrative': progress_complaints_administrative,
-    'solved_interpersonal': solved_complaints_interpersonal,
-    'unsolved_interpersonal': unsolved_complaints_interpersonal,
-    'progress_interpersonal': progress_complaints_interpersonal,
-    'solved_miscellaneous': solved_complaints_miscellaneous,
-    'unsolved_miscellaneous': unsolved_complaints_miscellaneous,
-    'progress_miscellaneous': progress_complaints_miscellaneous,
-    }
+    count_complaints = complaintCounts()
     return render(request,'ho/ho.html',context=count_complaints)
 
 
@@ -115,7 +87,7 @@ def viewDetailComplaints(request,cid):
         except:
             messages.error(request, "Complaint not updated")
 
-                 # Send ack mail to the admin staff
+        # Send ack mail to the admin staff
 
         mgmt_users = CustomUser.objects.filter(Q(role="Review Committee") | Q(role="Assessment Committee") | Q(is_superuser=True) | Q(username=complaint.user)).values_list('email',flat=True)
         email_list = list(mgmt_users)
@@ -137,7 +109,7 @@ Sincerely,
 grs@mhssce
 
                         """,
-            from_email="whalefry@gmail.com",
+            from_email=env("EMAIL"),
             recipient_list=email_list,
             fail_silently=False,
         )
@@ -145,41 +117,3 @@ grs@mhssce
         return redirect(request.get_full_path())
 
     return render(request,'ho/complaintDetailsHo.html',context=context)
-
-# Download documents
-@login_required(login_url='login')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@role_required(allowed_roles=['HO'])
-def download_complaint_doc(request, filename):
-    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/documents/"
-    file_path = os.path.join(file_directory, filename)
-    print(file_path)
-    if os.path.exists(file_path):
-        # If the file exists, serve it for download
-        with open(file_path, 'rb') as file:
-            response = HttpResponse(
-                file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            return response
-    else:
-        # If the file does not exist, return an error response
-        return HttpResponse("File not found", status=404)
-
-# Download reports
-@login_required(login_url='login')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@role_required(allowed_roles=['HO'])
-def download_complaint_reports(request, filename):
-    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/reports/"
-    file_path = os.path.join(file_directory, filename)
-    print(file_path)
-    if os.path.exists(file_path):
-        # If the file exists, serve it for download
-        with open(file_path, 'rb') as file:
-            response = HttpResponse(
-                file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            return response
-    else:
-        # If the file does not exist, return an error response
-        return HttpResponse("File not found", status=404)

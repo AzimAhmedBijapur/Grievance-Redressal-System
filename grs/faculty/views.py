@@ -1,9 +1,9 @@
+from pathlib import Path
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from grievances.models import Complaint
-from django.http import HttpResponse
 import os
 from login.models import CustomUser
 from django.utils.timezone import now
@@ -12,57 +12,28 @@ from grs.decorators import role_required
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import random
-from transformers import BertTokenizer, BertForSequenceClassification
-from torch.nn.functional import softmax
-import torch
+import environ
 
-# semantic analysis
+env = environ.Env()
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-model_name = 'bert-base-uncased'
-tokenizer = BertTokenizer.from_pretrained(model_name)
-model = BertForSequenceClassification.from_pretrained(model_name, num_labels=3)
-
-
-def perform_semantic_analysis(description):
-    # Tokenize the description
-    tokens = tokenizer(description, return_tensors='pt',
-                       truncation=True, padding=True)
-
-    # Make predictions
-    with torch.no_grad():
-        outputs = model(**tokens)
-
-    # Apply softmax to get probabilities
-    probabilities = softmax(outputs.logits, dim=1).squeeze()
-
-    # Choose the severity level with the highest probability
-    severity_levels = [1, 2, 3]
-    predicted_severity = severity_levels[torch.argmax(probabilities).item()]
-
-    return predicted_severity
-
-
-def analyze_complaint_severity(description):
-    severity = perform_semantic_analysis(description)
-    return severity
-
-
-# otp
+# generate otp
 
 def generate_otp():
     return str(random.randint(100000, 999999))
 
+# send otp via mail
 
 def send_otp_email(email, otp):
     subject = 'OTP Verification'
     message = f'Your OTP for GRS registration is: {otp}'
-    from_email = 'grs <whalefry@gmail.com>'  # Use your verified email here
+    from_email = f"grs <{env('EMAIL')}>"  # Use your verified email here
     recipient_list = [email]
 
     send_mail(subject, message, from_email, recipient_list)
 
-# Faculty dashboard
-
+# faculty dashboard
 
 @login_required(login_url='login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -83,19 +54,19 @@ def faculty(request):
     return render(request, 'faculty/faculty.html', context=count_complaints)
 
 
-# Add complaint - only for faculty
+# add complaint - only for faculty
+
 @login_required(login_url='login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @role_required(allowed_roles=['Faculty'])
 def addComplaint(request):
-    print(request.user)
+
     if request.method == 'POST':
         category = request.POST.get('category')
         subject = request.POST.get('subject')
         description = request.POST.get('description')
         documents = request.FILES['file-up']
         date = now()
-        severity = analyze_complaint_severity(description)
         complaint = Complaint.objects.create(
             user=request.user,
             category=category,
@@ -103,10 +74,12 @@ def addComplaint(request):
             description=description,
             documents=documents,
             date=date,
-            severity=severity
         )
+
         messages.success(request, "Complaint registered successfully")
+
         # Send ack mail to the faculty itself
+
         send_mail(
             subject="Received Grievance!",
             message=f"""
@@ -120,15 +93,19 @@ Sincerely,
 grs@mhssce
 
                         """,
-            from_email="whalefry@gmail.com",
+            from_email=f"{env('EMAIL')}",
             recipient_list=[str(request.user)],
             fail_silently=False,
         )
+
         # Send ack mail to the admin staff
 
-        mgmt_users = CustomUser.objects.filter(Q(role="Review Committee") | Q(
-            role="Assessment Committee") | Q(is_superuser=True)).values_list('email', flat=True)
+        mgmt_users = CustomUser.objects.filter(
+                    Q(role="Review Committee") | 
+                    Q(is_superuser=True)).values_list('email', flat=True)
+        
         email_list = list(mgmt_users)
+
         send_mail(
             subject="New Grievance Registered!",
             message=f"""
@@ -148,7 +125,7 @@ Sincerely,
 grs@mhssce
 
                         """,
-            from_email="whalefry@gmail.com",
+            from_email=f"{env('EMAIL')}",
             recipient_list=email_list,
             fail_silently=False,
         )
@@ -176,6 +153,7 @@ def viewMyComplaints(request):
         return render(request, 'faculty/viewMyComplaints.html', context=context)
 
     items_per_page = 10  # Number of items to display per page
+
     # Get the current page number from the URL parameter
     page_number = request.GET.get('page')
 
@@ -199,7 +177,6 @@ def viewMyComplaints(request):
 
 # View solved complaint - only for faculty
 
-
 @login_required(login_url='login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @role_required(allowed_roles=['Faculty'])
@@ -216,8 +193,11 @@ def viewMySolvedComplaints(request):
             "complaints": complaints
         }
         return render(request, 'faculty/viewMySolvedComplaints.html', context=context)
+    
     complaints = Complaint.objects.filter(user=request.user, status="Solved")
+
     items_per_page = 10  # Number of items to display per page
+
     # Get the current page number from the URL parameter
     page_number = request.GET.get('page')
 
@@ -239,21 +219,3 @@ def viewMySolvedComplaints(request):
     return render(request, 'faculty/viewMySolvedComplaints.html', context)
 
 
-# Download report - only for faculty
-@login_required(login_url='login')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@role_required(allowed_roles=['Faculty'])
-def download_complaint_report(request, filename):
-    file_directory = "/home/grsmhssce/Grievance-Redressal-System/grs/complaints/reports/"
-    file_path = os.path.join(file_directory, filename)
-    print(file_path)
-    if os.path.exists(file_path):
-        # If the file exists, serve it for download
-        with open(file_path, 'rb') as file:
-            response = HttpResponse(
-                file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            return response
-    else:
-        # If the file does not exist, return an error response
-        return HttpResponse("File not found", status=404)

@@ -23,18 +23,17 @@
 
 <body>
     <div class="header-div">
-        <div class="flex justify-end bg-green-500">
-            <div class="mr-6 p-2"><a href="{% url 'admin:index' %}" class="text-white font-medium">ADMIN
-                    LOGIN</a>
+        <div class="flex justify-end bg-green-700">
+            <div class="mr-6 p-2"><a href="{% url 'admin:index' %}" class="text-white font-medium">Admin login</a>
             </div>
         </div>
-        <div class="flex justify-end md:justify-start items-center bg-blue-50 md:px-24">
+        <div class="flex justify-end md:justify-start items-center bg-green-50 md:px-24">
             <div class="flex-1 flex items-center md:gap-4 p-2 md:p-4">
-                <img src="{% static 'images/logo-hq.png' %}" alt="" class="h-24 ml-6 rounded-full">
+                <img src="{% static 'images/logo-hq.png' %}" alt="" class="h-16 ml-6 rounded-full">
                 <div class="items-center" id="logo">
-                    <div class="text-green-600 font-extralight">Anjuman-I-Islam's</div>
-                    <div class="font-light text-black">M. H. Saboo Siddik </div>
-                    <div class="font-light text-black">College of Engineering</div>
+                    <div class="text-green-600 font-semibold">Anjuman-I-Islam's</div>
+                    <div class="text-black font-bold">M. H. Saboo Siddik </div>
+                    <div class="text-black font-bold">College of Engineering</div>
                 </div>
             </div>
             <div class="flex-1">
@@ -44,35 +43,33 @@
 
         </div>
         <nav class="" id="navbar">
-            <ul class="flex p-2 bg-green-500 justify-between">
+            <ul class="flex p-2 bg-green-700 justify-between">
                 <div class="flex">
-                    <li class="px-4"><a href="#About" class="text-white text-lg">About
+                    <li class="px-4"><a href="#About" class="text-white text-md">About
                             </a>
                     </li>
-                    <li class="px-4"><a href="#Contact" class="text-white text-lg">Contact
+                    <li class="px-4"><a href="#Contact" class="text-white text-md">Contact
                             </a>
                     </li>
-                    <li class="px-4 text-center "><a href="#process" class="text-white text-lg">Redressal Process</a>
+                    <li class="px-4 text-center "><a href="#process" class="text-white text-md">Process</a>
                     </li>
                 </div>
                 <div>
-                    <li class="px-4"> <a href="{% url 'login' %}" class="text-white font-bold text-lg">Login</a></li>
+                    <li class="px-4"> <a href="{% url 'login' %}" class="text-white font-bold text-md">Login</a></li>
                 </div>
             </ul>
         </nav>
     </div>
 
-    <div class="flex md:flex-row flex-col p-6 md:p-10 items-center ">
-        <div class="md:w-1/2">
-            <div><img src="{% static 'images/college.png' %}" alt="" class="rounded"></div>
+    <div class="flex md:flex-row flex-col p-6 md:p-10 items-center bg-green-100 ">
+        <div class="w-3/4 md:w-1/2">
+            <div><img src="{% static 'images/v-art-index.svg' %}" alt="" class="rounded"></div>
         </div>
 
-        <div id="About" class="mt-6 flex flex-col items-center w-full md:w-2/3 md:px-12 ">
-            <div class="text-center  text-3xl">
-                <h2 class="font-bold">About Us</h2>
-            </div>
+        <div id="About" class="mt-6 flex flex-col items-center w-full md:w-3/4 md:px-12">
+
             <div class="mt-6">
-                <p class="text-justify animate-typing">M. H. Saboo Siddik, also known as MHSS or Saboo Siddik, is an 'A' Grade
+                <p class="text-justify">M. H. Saboo Siddik, also known as MHSS or Saboo Siddik, is an 'A' Grade
                     engineering college located in Byculla, Mumbai, India. Affiliated with the University of Mumbai and
                     accredited by AICTE, it boasts a staff of 154 (comprising 57 teaching and 97 non-teaching members)
                     and serves approximately 1200 students. Established as a Muslim Minority Institution, it owes its
@@ -85,49 +82,59 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col md:flex-row  py-10 items-center" id="process">
+    <div class="flex flex-col md:flex-row  py-10 items-center bg-green-700" id="process">
         <div class="flex-1">
             <div class="px-10">
-                <h2 class="text-3xl font-bold">Redressal Process</h2>
+                <h2 class="text-3xl font-bold text-white">Redressal Process</h2>
             </div>
-            <div class="px-10 pb-6">
-                <dl class="mt-6">
-                    <dt class="font-semibold text-lg">1. Register</dt>
-                    <dd class="text-justify">Click on Login and then on Sign Up. Fill the details and register.</dd>
+            <div class="px-10 ">
+                <dl class="mt-6 grid md:grid-cols-2 gap-4 ">
+    
+                    <div class="cursor-pointer bg-green-100 p-4 rounded" >
+                        <dt class="font-semibold text-lg">1. Register</dt>
+                        <dd class="text-justify">Click on Login and then on <a class="underline text-inherit" href="{% url 'register' %}">Sign Up</a>. Fill the details and register.</dd>
+                    </div>
+      
+                    <div class="cursor-pointer p-4 bg-green-100 rounded">
+                        <dt class="font-semibold text-lg">2. Login</dt>
+                        <dd class="text-justify">You can <a class="underline text-inherit" href="{% url 'login' %}">Login</a> with your college mail id and password you created while registering.</dd>
+                    </div>
 
-                    <dt class="font-semibold text-lg mt-2">2. Login</dt>
-                    <dd class="text-justify">You can login with your college mail id and password you created while registering.</dd>
+                    <div class="cursor-pointer p-4 bg-green-100 rounded">
+                        <dt class="font-semibold text-lg">3. Lodge grievance</dt>
+                        <dd class="text-justify">Login to the dashboard and click on add complaints to <a class="underline text-inherit" href="{% url 'add/complaint' %}">Lodge a complaint</a>.</dd>
+                    </div>
+            
+                    <div class="cursor-pointer p-4 bg-green-100 rounded">
+                        <dt class="font-semibold text-lg">4. Track grievance</dt>
+                        <dd class="text-justify">You can track the status of grievance from the <a class="underline text-inherit" href="{% url 'view/MyComplaints' %}">Complaints</a> section in your dashboard.</dd>
+                    </div>
+             
+                    <div class=" menu-link cursor-pointer p-4 bg-green-100 rounded">
+                        <dt class="font-semibold text-lg">5. Download Reports</dt>
+                        <dd class="text-justify">Resolved grievances will be shown in <a class="underline text-inherit" href="{% url 'view/MySolvedComplaints' %}">Solved complaints</a> section from where you can download the report.</dd>
+                    </div>
 
-                    <dt class="font-semibold text-lg mt-2">3. Lodge grievance</dt>
-                    <dd class="text-justify">Login to the dashboard and click on add complaints to lodge a complaint.</dd>
-
-                    <dt class="font-semibold text-lg mt-2">4. Track grievance</dt>
-                    <dd class="text-justify">You can track the status of grievance from the 'Complaints' section in your dashboard.</dd>
-
-                    <dt class="font-semibold text-lg mt-2">5. Download Reports</dt>
-                    <dd class="text-justify">Resolved grievances will be shown in 'Solved Complaints' section from where you can download the report.</dd>
                 </dl>
             </div>
         </div>
-        <div class=" flex-1 flex justify-center items-center"><img src="{% static 'images/P2.png'%}" alt="" class="p-4">
-        </div>
     </div>
-    <div id="Contact" class="bg-green-500 py-10 px-12 mt-6">
+    <div id="Contact" class="bg-green-100 py-10 px-12">
         <div class="text-center text-3xl text-white font-bold">
-            <h2>Contact Us</h2>
+            <h2 class="text-green-700">Contact Us</h2>
         </div>
         <div class="md:grid md:grid-cols-3 mt-10 text-white gap-10" id="contact-content">
             <div
-                class="flex flex-col items-center mb-6 bg-black py-6 px-6 bg-opacity-40 rounded-xl justify-center gap-6">
+                class="flex flex-col items-center mb-6 bg-green-700 py-6 px-6  rounded-xl justify-center gap-6">
                 <div class="text-xl">Email</div>
                 <div class="text-lg">grs@mhssce.ac.in</div>
             </div>
             <div
-                class="flex flex-col items-center bg-black mb-6 py-6 px-6 bg-opacity-40 rounded-xl justify-center gap-6">
+                class="flex flex-col items-center bg-green-700 mb-6 py-6 px-6 rounded-xl justify-center gap-6">
                 <div class="text-xl">Call us</div>
                 <div class="text-lg">+91 22 23012922</div>
             </div>
-            <div class="flex flex-col items-center bg-black mb-6 py-6 px-6 bg-opacity-40 rounded-xl gap-6">
+            <div class="flex flex-col items-center bg-green-700 mb-6 py-6 px-6 rounded-xl gap-6">
                 <div class="text-xl">Address</div>
                 <div class="w-2/3 text-lg">8, Saboo Siddik Polytechnic Road, Byculla, Mumbai 400 008</div>
             </div>

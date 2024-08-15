@@ -45,3 +45,7 @@ def delete_complaint_documents(sender, instance, **kwargs):
         file_path = instance.documents.path
         if os.path.exists(file_path):
             os.remove(file_path)
+    if instance.report:
+        file_path = instance.report.path
+        if os.path.exists(file_path):
+            os.remove(file_path)

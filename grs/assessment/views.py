@@ -1,6 +1,7 @@
+from pathlib import Path
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import Http404,HttpResponse
+from django.http import Http404
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from grievances.models import Complaint
@@ -9,59 +10,28 @@ from django.db.models import Q
 from grs.decorators import role_required
 from login.models import CustomUser
 import os
+import environ
+from grs.dashboardCounts import complaintCounts
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+env = environ.Env()
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 @login_required(login_url='login')
 @cache_control(no_cache=True, must_revalidate=True,no_store=True)
 @role_required(allowed_roles=['Assessment Committee'])
 def assessment(request):
     user = request.user
-    solved_complaints_count = Complaint.objects.filter(status='Solved').count()
-    unsolved_complaints_count = Complaint.objects.filter(status='Unsolved').count()
-    progress_complaints_count = Complaint.objects.filter(status='In-Progress').count()
-
-    solved_complaints_academic = Complaint.objects.filter(status='Solved',category='Academic').count()
-    unsolved_complaints_academic= Complaint.objects.filter(status='Unsolved',category='Academic').count()
-    progress_complaints_academic = Complaint.objects.filter(status='In-Progress',category='Academic').count()
-
-    solved_complaints_administrative = Complaint.objects.filter(status='Solved', category='Administrative').count()
-    unsolved_complaints_administrative = Complaint.objects.filter(status='Unsolved', category='Administrative').count()
-    progress_complaints_administrative = Complaint.objects.filter(status='In-Progress', category='Administrative').count()
-
-    solved_complaints_interpersonal = Complaint.objects.filter(status='Solved', category='Interpersonal').count()
-    unsolved_complaints_interpersonal = Complaint.objects.filter(status='Unsolved', category='Interpersonal').count()
-    progress_complaints_interpersonal = Complaint.objects.filter(status='In-Progress', category='Interpersonal').count()
-
-    solved_complaints_miscellaneous = Complaint.objects.filter(status='Solved', category='Miscellaneous').count()
-    unsolved_complaints_miscellaneous = Complaint.objects.filter(status='Unsolved', category='Miscellaneous').count()
-    progress_complaints_miscellaneous = Complaint.objects.filter(status='In-Progress', category='Miscellaneous').count()
-
-    count_complaints = {
-    'solved':solved_complaints_count,
-    'unsolved':unsolved_complaints_count,
-    'progress':progress_complaints_count,
-    'solved_academic':solved_complaints_academic,
-    'unsolved_academic':unsolved_complaints_academic,
-    'progress_academic':progress_complaints_academic,
-    'solved_administrative': solved_complaints_administrative,
-    'unsolved_administrative': unsolved_complaints_administrative,
-    'progress_administrative': progress_complaints_administrative,
-    'solved_interpersonal': solved_complaints_interpersonal,
-    'unsolved_interpersonal': unsolved_complaints_interpersonal,
-    'progress_interpersonal': progress_complaints_interpersonal,
-    'solved_miscellaneous': solved_complaints_miscellaneous,
-    'unsolved_miscellaneous': unsolved_complaints_miscellaneous,
-    'progress_miscellaneous': progress_complaints_miscellaneous,
-    }
+    count_complaints = complaintCounts()
     return render(request,'assessment/Assessment.html',context=count_complaints)
-
 
 
 @login_required(login_url='login')
 @cache_control(no_cache=True, must_revalidate=True,no_store=True)
 @role_required(allowed_roles=['Assessment Committee'])
 def viewComplaints(request):
-    complaints = Complaint.objects.filter( Q(status="Unsolved") | Q(status="In-Progress"))
+    complaints = Complaint.objects.filter(Q(status="In-Progress"))
     complaints = complaints.order_by('severity')
     items_per_page = 10  # Number of items to display per page
     page_number = request.GET.get('page')  # Get the current page number from the URL parameter
@@ -107,14 +77,17 @@ def viewDetailComplaints(request,cid):
     }
     if request.method == 'POST':
         report = request.FILES['report']
+        isSolved = request.isSolved
         complaint.report = report
+        if isSolved:
+            complaint.status = 'Solved'
         try:
             complaint.save()
             messages.success(request, "Complaint updated")
         except:
             messages.error(request, "Complaint not updated")
 
-                 # Send ack mail to the admin staff
+        # Send ack mail to the admin staff
 
         mgmt_users = CustomUser.objects.filter(Q(role="Review Committee") | Q(role="Assessment Committee") | Q(is_superuser=True) | Q(username= complaint.user)).values_list('email',flat=True)
         email_list = list(mgmt_users)
@@ -136,7 +109,7 @@ Sincerely,
 grs@mhssce
 
                         """,
-            from_email="whalefry@gmail.com",
+            from_email=f"{env('EMAIL')}",
             recipient_list=email_list,
             fail_silently=False,
         )
@@ -145,41 +118,5 @@ grs@mhssce
 
     return render(request,'assessment/complaintDetailsAssessment.html',context=context)
 
-# Download documents
-@login_required(login_url='login')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@role_required(allowed_roles=['Assessment Committee'])
-def download_complaint_doc(request, filename):
-    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/documents/"
-    file_path = os.path.join(file_directory, filename)
-    print(file_path)
-    if os.path.exists(file_path):
-        # If the file exists, serve it for download
-        with open(file_path, 'rb') as file:
-            response = HttpResponse(
-                file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            return response
-    else:
-        # If the file does not exist, return an error response
-        return HttpResponse("File not found", status=404)
 
 
-# Download reports
-@login_required(login_url='login')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@role_required(allowed_roles=['Assessment Committee'])
-def download_complaint_reports(request, filename):
-    file_directory = "/home/AzimAhmedBijapur/Grievance-Redressal-System/grs/complaints/reports/"
-    file_path = os.path.join(file_directory, filename)
-    print(file_path)
-    if os.path.exists(file_path):
-        # If the file exists, serve it for download
-        with open(file_path, 'rb') as file:
-            response = HttpResponse(
-                file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            return response
-    else:
-        # If the file does not exist, return an error response
-        return HttpResponse("File not found", status=404)

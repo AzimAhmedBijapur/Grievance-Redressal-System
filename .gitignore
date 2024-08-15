@@ -1,1 +1,3 @@
-node_modules
+./grs/node_modules
+venv
+./grs/.env

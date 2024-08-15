@@ -69,10 +69,9 @@ nav ul li a{
     margin-top:1rem;
 }
 
+
 /* add complaint */
-#content-add-complaint{
-    background-color: rgb(241 239 240);
-}
+
 #content-add-complaint form{
     /* width: 80%; */
     display: flex;
@@ -131,6 +130,7 @@ form .input-fields input:not(#submitComplaint){
 #rev-assess .field select{
     width: 100%;
 }
+
 
 /* Faculty page nav burger*/
 

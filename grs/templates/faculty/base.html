@@ -11,10 +11,10 @@
 
 </head>
 
-<body class="bg-slate-100">
+<body class="bg-green-100">
     <div id="container" style="display: block !important;">
         <!-- sidenav begins -->
-        <div class="flex justify-between py-3 bg-slate-100 px-7">
+        <div class="flex justify-between py-3 bg-green-100 px-7">
 
             <div class="" id="burger"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="w-8 h-8 pb-2">
@@ -41,19 +41,7 @@
 
     </div>
     <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
-    <script>
-        const burger = document.getElementById('burger');
-        const menu = document.getElementById('menu');
-        burger.addEventListener('click', () => {
-            if (menu.style.display === 'block') {
-                menu.style.display = 'none';
-            }
-            else {
-                menu.style.display = 'block';
-            }
-        });
-
-    </script>
+    <script src="{% static 'js/burgerMenu.js' %}" defer></script>
 </body>
 
 </html>

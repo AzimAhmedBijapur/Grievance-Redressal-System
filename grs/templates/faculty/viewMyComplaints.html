@@ -1,7 +1,7 @@
 {% extends 'faculty/base.html'%}
 {% load static %}
 {% block body%}
-<div id="content-view-complaints" class="mt-6 " style="background-color: rgb(241 245 249);">
+<div id="content-view-complaints" class="mt-6 bg-green-100">
     <div class="ml-6 mb-6 mr-6" id="messageDiv">
         {% for message in messages%}
         <div class="bg-red-200 p-5 w-full rounded-lg text-red-700 flex justify-between">
@@ -40,6 +40,7 @@
                                     <th scope="col" class="px-6 py-4">Category</th>
                                     <th scope="col" class="px-6 py-4 whitespace-nowrap">Date published</th>
                                     <th scope="col" class="px-6 py-4">Report</th>
+                                    <th scope="col" class="px-6 py-4">Document</th>
                                     <th scope="col" class="px-6 py-4">Status</th>
                                     <th scope="col" class="px-6 py-4 whitespace-nowrap">Escalated to HO</th>
 
@@ -62,6 +63,15 @@
                                         ---
                                         {% endif %}
                                     </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {% if complaint.documents %}
+                                        <a href="{{complaint.documents.name}}"><i class="fa-solid fa-file fa-beat fa-xl"
+                                                style="color: #363fe4;"></i>
+                                        </a>
+                                        {% else %}
+                                        ---
+                                        {% endif %}
+                                    </td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ complaint.status}}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ complaint.escalatetoHo}}</td>
                                 </tr>
@@ -75,7 +85,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="pagination text-center">
+    <div class="pagination text-center">
         <span class="step-links flex items-center justify-center gap-10">
             {% if complaints.has_previous %}
             <a href="?page={{ complaints.previous_page_number }}" class="text-lg">&laquo; Previous</a>
@@ -89,7 +99,7 @@
             <a href="?page={{ complaints.next_page_number }}" class="text-lg">Next &raquo;</a>
             {% endif %}
         </span>
-    </div> -->
+    </div>
 </div>
 <script>
     function hideMessageDiv() {

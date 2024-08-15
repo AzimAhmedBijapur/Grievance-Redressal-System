@@ -36,24 +36,12 @@
         {% endblock body%}
 
     </div>
-    <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
-    <script>
-        const burger = document.getElementById('burger');
-        const menu = document.getElementById('menu');
-        burger.addEventListener('click', () => {
-            if (menu.style.display === 'block') {
-                menu.style.display = 'none';
-            }
-            else {
-                menu.style.display = 'block';
-            }
-        });
+    <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous" defer></script>
+    <script src="{% static 'js/burgerMenu.js' %}" defer></script>
+    <script src="{% static 'js/chart.umd.js' %}"></script>
 
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://kit.fontawesome.com/864e9fd339.js" crossorigin="anonymous"></script>
     <script>
-        // for chart 1
+        // for academic complaints chart
         var complaintData = {
             labels: ['Solved', 'Unsolved', 'In Progress'],
             datasets: [{
@@ -97,7 +85,7 @@
         var myChart = new Chart(ctx, chartConfig);
     </script>
     <script>
-        // for chart 1
+        // for administrative complaints chart
         var complaintData = {
             labels: ['Solved', 'Unsolved', 'In Progress'],
             datasets: [{
@@ -143,7 +131,7 @@
     </script>
 
     <script>
-        // for chart 1
+        // for interpersonal complaints chart
         var complaintData = {
             labels: ['Solved', 'Unsolved', 'In Progress'],
             datasets: [{
@@ -187,8 +175,9 @@
         var ctx = document.getElementById('complaintChart3').getContext('2d');
         var myChart = new Chart(ctx, chartConfig);
     </script>
+
     <script>
-        // for chart 1
+        // for miscellaneous complaints chart
         var complaintData = {
             labels: ['Solved', 'Unsolved', 'In Progress'],
             datasets: [{

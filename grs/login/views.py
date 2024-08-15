@@ -1,4 +1,5 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from pathlib import Path
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .forms import CreateUserForm
@@ -10,15 +11,16 @@ import os
 from functools import wraps
 import pyotp
 import re
-from django.utils import timezone
-from datetime import datetime
-from django.utils.timezone import make_aware
 from django.core.mail import send_mail
 from django.shortcuts import HttpResponse
 import os
+import environ
+
+env = environ.Env()
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Allow access to register page for faculty only after email verification
-
 
 def otp_verified_required(view_func):
     @wraps(view_func)
@@ -37,12 +39,10 @@ def otp_verified_required(view_func):
 # Check if user is admin or not
 # This is used in decorator for management staff registeration view
 
-
 def is_admin(user):
     return user.is_authenticated and user.is_staff
 
 # Register faculties
-
 
 def verify(request):
     if request.method == 'POST':
@@ -52,7 +52,7 @@ def verify(request):
 
         entered_email = request.POST.get("email")
 
-        if entered_email.endswith('@' + email_domain):
+        if entered_email.endswith('@' + email_domain) or env('IS_TESTING'):
             # Email matches the specified domain, validate the name part
             name_without_domain = entered_email.split('@')[0]
 
@@ -60,11 +60,11 @@ def verify(request):
             name_pattern = re.compile(r'^[a-zA-Z.]+$')
             # name_pattern = re.compile(r'^[a-zA-Z0-9.]+$')
 
-            if name_pattern.match(name_without_domain):
+            if name_pattern.match(name_without_domain) or env('IS_TESTING'):
                 # Name follows the specified format, send OTP
                 subject = 'Your OTP for GRS Registration'
                 message = f'Your OTP is {otp}.'
-                from_email = 'whalefry@gmail.com'
+                from_email = env('EMAIL')
                 recipient_list = [entered_email]
                 send_mail(subject, message, from_email, recipient_list)
                 context = {"otp": otp}
@@ -73,12 +73,12 @@ def verify(request):
             else:
                 # Name does not follow the specified format, show error
                 messages.error(
-                    request, 'Invalid email format')
+                    request, 'Invalid email format, only faculties with college domain can register')
                 return redirect('otp_verification')
         else:
             # Email does not match the specified domain, show error
             messages.error(
-                request, 'Invalid email domain')
+                request, 'Invalid email domain, you can only register with college domain')
             return redirect('otp_verification')
 
     return render(request, 'register/otp.html')
@@ -137,7 +137,6 @@ def register(request):
 
 # Register management staff only by admin
 
-
 @user_passes_test(is_admin)
 def registerManagementStaff(request):
     if request.method == 'POST':
@@ -157,7 +156,6 @@ def registerManagementStaff(request):
     return render(request, 'register/register-mgmt.html', context)
 
 # Login page
-
 
 def loginPage(request):
     if request.method == 'POST':
@@ -190,7 +188,6 @@ def loginPage(request):
 
 # Logout
 
-
 @login_required(login_url='login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logoutUser(request):
@@ -206,19 +203,3 @@ def index(request):
 # for admin and mgmt staff
 
 
-@login_required(login_url='login')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def download_complaint_document(request, filename):
-    file_directory = "complaints/documents/"
-    file_path = os.path.join(file_directory, filename)
-    print(file_path)
-    if os.path.exists(file_path):
-        # If the file exists, serve it for download
-        with open(file_path, 'rb') as file:
-            response = HttpResponse(
-                file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            return response
-    else:
-        # If the file does not exist, return an error response
-        return HttpResponse("File not found", status=404)

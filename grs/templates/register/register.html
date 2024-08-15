@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'src/register.css' %}">
 </head>
 
-<body class="flex justify-center py-5 px-3 bg-slate-100">
+<body class="flex justify-center py-5 px-3 bg-green-100">
     <div class="p-10 bg-white w-full md:w-1/2 rounded-xl">
         <div class="flex flex-col gap-6 justify-center mb-10 items-center bg-blue-50 p-4 rounded-lg md:flex-row">
             <img src="{% static 'images/logo-hq.png' %}" class="rounded-full h-28">
@@ -21,6 +21,7 @@
             </div>
         </div>
         <p class="text-center text-red-500 text-lg my-6">(Only for faculty)</p>
+        <div class="mb-4 px-10 underline"><a class="text-blue-500" href="{% url 'index' %}">Back to home</a></div>
         <div>
             {% if form.errors %}
             <div class="mt-4 mb-4">
@@ -45,7 +46,7 @@
                 {% endfor %}
                 <div class="flex justify-center">
                     <input type="submit"
-                        class=" w-2/3 bg-green-500 rounded-sm px-3 py-3 text-white font-bold md:w-full">
+                        class=" w-2/3 bg-green-700 rounded-sm px-3 py-3 text-white font-bold md:w-full">
                 </div>
             </form>
         </div>

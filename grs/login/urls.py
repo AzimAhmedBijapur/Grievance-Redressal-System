@@ -10,7 +10,5 @@ urlpatterns = [
     path("login", views.loginPage, name="login"),
     path("logout", views.logoutUser, name="logout"),
     path("", views.index, name="index"),
-    path('complaints/documents/<str:filename>',
-         views.download_complaint_document, name='download_complaint_document'),
 
 ]
